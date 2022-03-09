@@ -1,0 +1,28 @@
+---
+title: "Final"
+author: '[Your first name] [Your last name]'
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: true
+    toc: true
+    toc_float: true
+    toc_depth: 3
+---
+
+# Setup {.unnumbered}
+
+```{r}
+# Install pacman
+if (!require("pacman")) install.packages("pacman")
+# p_load function loads packages if installed, or install then loads otherwise
+pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr)
+```
+
+# Data collection {.unnumbered}
+
+```{r}
+
+```
+
+
