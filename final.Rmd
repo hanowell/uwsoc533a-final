@@ -21,7 +21,7 @@ output:
 * **Do not just print out the `data.frame` of results. Put your results into a formatted table using `kable` or a similar package.**
 * **Read [about the data](#about-the-data) before starting the problems to understand what data is available to you.**
 * **Save yourself some extra work by reusing previous results where applicable**
-* **Try to write your code as cleanly as possible. The cleaner your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are horribly wrong.**
+* **Try to write your code as cleanly as possible, with comments about the steps you are taking along the way. The cleaner your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are horribly wrong.**
 * **Keep your written answers concise, but also specific to the question at hand.**
 * **Have fun?**
 
@@ -162,7 +162,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_fltper`, `us_mltper`, and `us_bltper`
 
-**These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1933 through 2016. They have all of the columns you expect from a life table, with `Age` being the starting age of each age group, and `Year` referring to your annual period from which the life table caluclated.**
+**These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1933 through 2016. They have all of the columns you expect from a life table, with `Age` being the starting age of each age group, and `Year` referring to your annual period from which the life table calculated.**
 
 ### `us_fltper_2009`
 
@@ -185,7 +185,7 @@ head(final_data[["us_asmr"]])
 
 **Report total (both sexes combined) age-specific person-years lived in the 2015 calendar-year period below in a table with the following structure:**
 
-* **`Age` as defined in the original dataset**
+* **`Age` as defined in the original data set**
 * **`py_linear`: The linear growth approximation of ASPY**
 * **`py_constant`: The constant growth approximation of ASPY**
 * **`py_hmd`: The ASPY approximation for the same population and period from the original HMD data source (i.e. `us_exposures`)**
@@ -223,7 +223,7 @@ head(final_data[["us_asmr"]])
 
 **Report the age-specific CGR results for both sexes combined for 2015 in a table below with the following structure:**
 
-* **`Age` as defined in the original dataset**
+* **`Age` as defined in the original data set**
 * **`cgr_linear`: age-specific CGR under the linear growth approximation of ASPY**
 * **`cgr_constant`: age-specific CGR under the constant growth approximation of ASPY**
 * **`cgr_hmd`: age-specific CGR using ASPY from the original HMD data source**
@@ -348,7 +348,7 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decompositions of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the differences in the effects mean.**
+**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decomposition of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the differences in the effects mean.**
 
 **Answer below:**
 
@@ -432,7 +432,7 @@ final_data[["us_ppr"]] %>%
 
 ## Computation
 
-**Calculate the TFR, GRR, NRR, and GFR for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided.**
+**Calculate the TFR, GRR, NRR, GFR, and GFRc (GFR estimated from CBR assuming ${}_{\beta - n}C_\alpha = 0.25 = c$) for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided, even if you have to do some of the estimation indirectly. Feel free to assume the sex ratio at birth (SRB) is a constant 1.05 males per female. Hint: It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and $p(A_m)$.**
 
 ```{r fertility_and_reproduction_compute}
 
@@ -443,7 +443,7 @@ final_data[["us_ppr"]] %>%
 **Report the results below in a table with the following structure:**
 
 * **`Year`: The period for which the rate applies**
-* **`[tfr/grr/nrr/gfr/cbr]`: Five separate columns for each of the period rates requested**
+* **`[tfr/grr/nrr/gfr/cbr/gfr_c]`: Five separate columns for each of the period rates requested, including the actual GFR and the GFT estimated assuming that ${}_{\beta - n}C_\alpha = 0.25 = c$.**
 
 ```{r fertility_and_reproduction_report}
 
@@ -459,7 +459,7 @@ final_data[["us_ppr"]] %>%
 
 ## Computation
 
-**Using the appropriate sex-specific parent life tables provided, construct sex-specific (including both sexes combined) multiple decrement tables for deaths by despair vs. all other causes.**
+**Construct a period multiple decrement table for deaths by despair vs. all other causes for both sexes combined in the U.S. in 2015.**
 
 **Hints:**
 
@@ -472,7 +472,7 @@ final_data[["us_ppr"]] %>%
 
 ## Report results
 
-**For each sex (including both sexes combined), report a separate cause-specific multiple decrement table with column `Age`, as well as columns `mx_[d/o]`, `dx_[d/o]`, and `lx_[d/o]`, where `d` is for "despair" and `o` is for "other" causes of death, respectively. These column naming conventions should be familiar to you by now.**
+**Report the multiple decrement table with column `Age`, as well as columns `mx_[d/o]`, `dx_[d/o]`, and `lx_[d/o]`, where `d` is for "despair" and `o` is for "other" causes of death, respectively. These column naming conventions should be familiar to you by now.**
 
 ```{r multiple_decrement_report}
 
@@ -480,7 +480,7 @@ final_data[["us_ppr"]] %>%
 
 ## Interpret results
 
-**Describe the age pattern of age-specific mortality of probability of death due to despair compared to deaths due to all other causes. Highlight any differences between the sexes that stand out to you.**
+**Describe the age pattern of age-specific mortality of probability of death due to despair compared to deaths due to all other causes.**
 
 **Answer below:**
 
@@ -490,7 +490,7 @@ final_data[["us_ppr"]] %>%
 
 ## Compute
 
-**Employing the proportional hazards assumption and accompanying procedure that we learned in class, construct a cause-deleted life table for each sex (including both sexes combined) that excludes mortality due to despair.**
+**Employing the proportional hazards assumption and accompanying procedure that we learned in class, construct a cause-deleted life table for both sexes combined in the U.S. in 2015 that excludes mortality due to despair.**
 
 ```{r cause_deleted_compute}
 
@@ -498,7 +498,7 @@ final_data[["us_ppr"]] %>%
 
 ## Report results
 
-**For each sex (including both sexes combined), report a cause-deleted life table below with the typical life table columns that we've reported so many times in previous assignments (only they should be calculated for the cause-deleted case, of course).**
+**Report the cause-deleted life table below with the typical life table columns that we've reported so many times in previous assignments (only they should be calculated for the cause-deleted case, of course).**
 
 ```{r cause_deleted_report}
 
@@ -506,7 +506,7 @@ final_data[["us_ppr"]] %>%
 
 ## Interpret results
 
-**With reference to the appropriate sex-specific parent life tables, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60. Highlight any differences by sex that stand out to you.**
+**With reference to the appropriate parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60.**
 
 **Answer below**
 
@@ -516,7 +516,7 @@ final_data[["us_ppr"]] %>%
 
 ## Computation
 
-**Assuming a closed population, project the female population of the U.S. by age from 2005 to 2015 assuming 2005 age- and sex-specific vital rates.**
+**Assuming a closed population, project the female population of the U.S. by age from 2005 to 2015 assuming 2005 age- and sex-specific vital rates remain constant over the projection period. Assume the sex ratio at birth is 1.05 males per female.**
 
 **Hints:**
 
@@ -524,6 +524,7 @@ final_data[["us_ppr"]] %>%
 * **Your open-ended age interval for the projection needs to be five years younger than the open-ended age interval for your life tables, which means you'll need to aggregate the starting population counts accordingly.**
 * **Your age groups need to be uniformly five-years in length, so again you need to aggregate the starting population counts accordingly.**
 * **I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group's person-years columns into uniform five-year age groups.**
+* **You will need to aggregate birth rates into five-year age groups. I suggest assuming that $\alpha = 15$ and $\beta = 55$, meaning you will need to calculate birth rates for five-year age groups from starting ages 15 your 50, in five-year increments.**
 
 ```{r projection_compute}
 
@@ -552,7 +553,7 @@ final_data[["us_ppr"]] %>%
 
 # Stable equivalent population predictions
 
-**Below, I construct `data.frame`s of ratios between 2007 vs. 2005 age-specific fertility rates, as well as the same ratios comparing 2009 vs. 2007.**
+**Below, I construct a `data.frame` of ratios between 2007 vs. 2005 age-specific fertility rates, as well as the same ratios comparing 2009 vs. 2007.**
 
 ```{r ratios}
 asfr_ratios <- final_data[["us_asfr"]] %>%
@@ -568,7 +569,7 @@ asfr_ratios <- final_data[["us_asfr"]] %>%
   dplyr::select(Age, comparison, ratio)
 ```
 
-**Below is a plot of ratios between the 2007 vs. 2005 age-specific fertility rates and the 2009 vs. 2007 age-specific fertility rates, respectively. Notice how the age-specific fertility rates increased from 2005 to 2007 for most high-fertility age groups (and increased especially at older ages). By comparison, fertility decreased below age 40 from 2007 to 2009 (two years into the Great Recession).**
+**Below is a plot of ratios between the 2007 vs. 2005 age-specific fertility rates and the 2009 vs. 2007 age-specific fertility rates, respectively. Notice how the age-specific fertility rates increased from 2005 to 2007 for most high-fertility age groups (and increased especially at older ages). By comparison, fertility below age 40 decreased from 2007 to 2009 (two years into the Great Recession).**
 
 ```{r asfr_ratios_plot, echo=FALSE, message=FALSE, warning=FALSE}
 asfr_ratios %>%
@@ -584,7 +585,7 @@ asfr_ratios %>%
 **We will compute female stable equivalent populations in 2009 under two scenarios:**
 
 * **The prevailing age-specific vital rates in 2009**
-* **The age-specific vital rates in 2009 had ASMR ratios comparing 2009 to 2007 been the same as they had been comparing 2007 to 2005**
+* **The age-specific vital rates in 2009 had ASFR ratios comparing 2009 to 2007 been the same as they had been comparing 2007 to 2005**
 
 **Below, I construct the age-specific fertility and mortality data you will use to complete this task. Read the code and the comments to see what I'm doing.**
 
@@ -645,16 +646,25 @@ us_asfr_2009 %>%
 * **`rate_name`: Row for birth, death, and growth**
 * **`rate_value`: Value for the stable rate in question**
 
+```{r stable_equiv_report_rates}
+
+```
+
+
 ## TFR effect on the intrinsic growth rate in the stable equivalent populations
 
-**Using $\LaTeX$, show the effect of the change in TFR between the alternative and baseline scenarios on the intrinsic growth rate of the stable equivalent population as a function of the generation length $T$**
+**Using $\LaTeX$, show the effect of the change in TFR between the alternative and baseline scenarios on the intrinsic growth rate of the stable equivalent population as a function of the generation length $T$, plugging in the actual values of the TFRs and simplifying. Show your work in $\LaTeX$ and in code. You don't need to estimate $T$.**
+
+```{r}
+
+```
 
 **Answer below:**
 
 
 ## Interpret results
 
-**Compare the actual, baseline stable equivalent, and alternative stable equivalent population structures and intrinsic rates and explain the differences between them with reference to the underlying rate schedules. I will give you 1 whole bonus point if you correctly reference our lessons on the comparative statics of fertility effects on stable age structure, and another whole bonus point if you correctly reference our lessons on fertility effects on the stable death rate.**
+**Compare the actual, baseline stable equivalent, and alternative stable equivalent population structures and intrinsic rates and explain the differences between them with reference to the underlying rate schedules. I will give you 1 whole bonus point if you correctly employ lessons about the comparative statics of fertility effects on stable age structure, and another whole bonus point if you correctly employ our lessons on fertility effects on the stable death rate.**
 
 **Answer below:**
 
@@ -664,7 +674,7 @@ us_asfr_2009 %>%
 
 ## Compute
 
-**Calculate the population momentum factor for 2009 (using the actual ASFRs).**
+**Calculate the population momentum factor for U.S. 2009 using the actual ASFRs, and for both sexes combined.**
 
 ```{r momentum}
 
