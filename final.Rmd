@@ -10,7 +10,14 @@ output:
     toc_depth: 3
 ---
 
-# Setup {.unnumbered}
+# Instructions
+
+* **Complete the problem sets below.**
+*  **Write all of your code in the .Rmd file, with zero dependencies on external files other than the `final_data` object that you will load in from a GitHub URL.**
+* **Use your best judgment on the number of significant figures to include in your reported results; i.e., don't just report the default. Think about the comparison you are making and the scale of the measurements, and then choose an appropriate display precision.**
+* **Write your code, display your results, and interpret results in the areas indicated in the instructions of each problem.**
+
+# Setup
 
 ```{r}
 # Install pacman
@@ -19,10 +26,362 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr)
 ```
 
-# Data collection {.unnumbered}
+# Data collection
+
+```{r}
+final_data <- readRDS(url("https://github.com/hanowell/uwsoc533a-final/blob/main/data/final_data.rds?raw=true"))
+```
+
+
+# About the data
+
+## Context
+
+**All of the data used for the final applies to periods or cohorts in the U.S.**
+
+## Data sources
+
+**Data sets providing exposures, population counts, and mortality statistics come from the Human Mortality Database (HMD). Data sets providing fertility statistics come from the Human Fertility Database (HFD).**
+
+## Top-level data structure
+
+**You've just loaded a `list` of all the `data.frame`s you need to complete this final. To access a given `data.frame` in the `list`:**
+
+```{r eval=FALSE}
+final_data[["[name of data.frame]"]]
+```
+
+**For example:**
+
+```{r}
+head(final_data[["us_asmr"]])
+```
+
+## Data dictionaries
+
+### `us_asfr`
+
+**Period age-specific fertility rates (ASFRs) for the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+
+* **`Year`: The one-year period during which ASFR was measured**
+* **`Age`: Starting age of one-year age group applicable to `ASFR` in `Year`**
+* **`ASFR`: ASFR for the `Age` group in `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the left or right**
+
+### `us_asmr`
+
+**Period age-specific mortality rates (ASMRs) by sex for the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+
+* **`Year`: The one-year period during which ASMR was measured**
+* **`Age`: Starting age of one-year age group applicable to ASMR in `Year`**
+* **`Female`: Female ASMR for the `Age` group in `Year`**
+* **`Male`: Male ASMR for the `Age` group in `Year`**
+* **`Total`: ASMR for the `Age` group in `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
+
+### `us_births`
+
+**Period age-specific birth counts on January 1st in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+
+* **`Year`: The one-year period during which births were counted on 1 January**
+* **`Age`: Starting age of one-year age group applicable to birth count in `Year`**
+* **`Total`: January 1st birth count for the `Age` group in `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the left or right**
+
+### `us_deaths`
+
+**Period age-specific death counts on January 1st in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+
+* **`Year`: The one-year period during which death count was measured**
+* **`Age`: Starting age of one-year age group applicable to death count in `Year`**
+* **`Female`: Female death count for the `Age` group in `Year`**
+* **`Male`: Male death count for the `Age` group in `Year`**
+* **`Total`: Total death count for the `Age` group in `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
+
+### `us_deaths_despair`
+
+**Period age-specific death counts due to "despair" (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) in the U.S. in 2015.**
+
+* **`Age`: Starting age for the age group**
+* **`D_despair`: Number of deaths in `Age` group due to despair**
+
+### `us_deaths_lexis`
+
+**Period age-specific death counts by birth cohort and sex in the U.S. in 2015.**
+
+* **`Year`: The one-year period during which cohort's age-specific death count was measured**
+* **`Age`: Starting age for the age group**
+* **`Cohort`: Birth cohort to which age-specific death count applies**
+* **`Female`: Female cohort- and age-specific death count**
+* **`Male`: Male cohort- and age-specific death count**
+* **`Total`: Total cohort- and age-specific death count**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
+
+### `us_exposures`
+
+**Period age-specific person-year (ASPY) approximations by sex in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+
+* **`Year`: The one-year period during which ASPY was measured**
+* **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
+* **`Female`: Female ASPY for the `Age` group in `Year`**
+* **`Male`: Male ASPY for the `Age` group in `Year`**
+* **`Total`: Total ASPY for the `Age` group in `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
+
+### `us_exposures_lexis`
+
+**Period age-specific person-year (ASPY) approximations by birth cohort sex in the U.S. in 2015.**
+
+* **`Year`: The one-year period during which ASPY was measured**
+* **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
+* **`Cohort`: Birth cohort to which age-specific death count applies**
+* **`Female`: Female ASPY for the `Age` group and cohort in `Year`**
+* **`Male`: Male ASPY for the `Age` group and cohort in `Year`**
+* **`Total`: Total ASPY for the `Age` group and cohort in `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
+
+### `us_population`
+
+**Age-specific population counts by sex and day of year (January 1st vs. December 31st) by sex in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+
+* **`Year`: The one-year period during which population counts were measured**
+* **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
+* **`Female1`: Female population count for the `Age` group on January 1st of `Year`**
+* **`Male1`: Male population count for the `Age` group on January 1st of `Year`**
+* **`Total1`: Total population count for the `Age` group on January 1st of `Year`**
+* **`Female2`: Female population count for the `Age` group on December 31st of `Year`**
+* **`Male2`: Male population count for the `Age` group on December 31st of `Year`**
+* **`Total2`: Total population count for the `Age` group on December 31st of `Year`**
+* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
+
+### `us_ppr`
+
+**Parity progression ratios (PPRs) for baseline parity 0 through 3 for the U.S. 1918, 1943, and 1968 birth cohorts, respectively.**
+
+* **`Cohort`: Calendar year of birth cohort**
+* **`PPR[A]_[B]`: Parity progression ratio for moving from parity `A` to parity `B`**
+* **`OpenInterval`: I'm guessing this is an indicator for whether or not the birth `Cohort` is still open; just assume that all of these cohorts have completed their reproductive lifespan**
+
+# Age-specific person-year (ASPY) approximations {#aspy-approx}
+
+## Computation
+
+**For the U.S. in 2015, use the population counts provided from the appropriate period(s) to approximate the age-specific person-years (ASPY) under the following assumptions, respectively:**
+
+* **Linear (and constant) growth in person-years during the period**
+* **Constant (but not necessarily linear) growth in person-years during the period**
+
+```{r aspy_approx_compute}
+
+```
+
+## Report results
+
+**Report the results for 2015 below along with the HMD's person-year approximations in a table with the following structure:**
+
+* **`Age` as defined in the original dataset**
+* **`py_linear`: The linear growth approximation of ASPY**
+* **`py_constant`: The constant growth approximation of ASPY**
+* **`py_hmd`: The ASPY approximation from the original HMD data source**
+
+```{r aspy_approx_report}
+
+```
+
+
+## Interpret results
+
+**Compare these three ASPY approximations in terms of their overall similarity or dissimilarity to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.**
+
+**Answer below:**
+
+
+
+# Age-specific and population crude growth rate (CGR) approximations {#cgr_approx}
+
+## Computation
+
+**Using the person-year approximations you made in the [previous problem](#aspy-approx), estimate the age-specific and population CGR, respectively, from 2015 to 2016 under the following assumptions, respectively:**
+
+* **Linear (and constant) growth in person-years during the period**
+* **Constant (but not necessarily linear) growth in person-years during the period**
+
+```{r cgr_approx_compute}
+
+```
+
+## Report results
+
+### Age-specific CGR
+
+**Report the age-specific CGR results in a table below with the following structure:**
+
+* **`Age` as defined in the original dataset**
+* **`cgr_linear`: age-specific CGR under the linear growth approximation of ASPY**
+* **`cgr_constant`: age-specific CGR under the constant growth approximation of ASPY**
+* **`cgr_hmd`: age-specific CGR using ASPY from the original HMD data source**
+
+```{r cgr_approx_report_as}
+
+```
+
+### Population CGR
+
+**Report the CGR results for the total population in a table below with the following structure:**
+
+* **`Method`: The person-years approximation method used; (values will be Linear, Constant growth, HMD, respectively)**
+* **`CGR`: Crude growth rate as approximated by the `Method` indicated**
+
+```{r cgr_approx_report_total}
+
+```
+
+## Interpret results
+
+**Using the CGR as calculated using the HMD person-years approximation, describe the age-specific pattern of population growth between 2015 and 2016 as compared to the total population growth during that period. Describe the robustness of those results to the person-year approximation method.**
+
+**Answer below:**
+
+
+
+# Principal period rates in 2015
+
+## Computation
+
+**Compute the principal period rates that contributed to the population (i.e. not age-specific) CGR from 2015 to 2016. Hint: You will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
+
+```{r principal_rates_compute}
+
+```
+
+## Report results
+
+**Report your results in a table below with the following structure:**
+
+* **`rate_name`: The row values will be CBR, CDR, CRNM**
+* **`rate_value`: The value of the prinicpal rate indicated by `rate_name`**
+
+# Pre- and post- Great Recession mortality conditions
+
+## Age-standardized crude death rate (CDR)
+
+### Computation
+
+**Using 2005 as the standard, compute the un-standardized and age-standardized CDRs by sex (including both combined) for 2005 and 2015.**
+
+```{r ascdr_compute}
+
+```
+
+### Report results
+
+**Report your results in a table below with the following structure:**
+
+* **`Year`: The year of the CGR estimate**
+* **`sex`: The sex to which the CGR estimate applies: Male, Female, Total**
+* **`cgr`: The un-standardized CGR**
+* **`ascgr`: The standardized CGR**
+
+```{r ascdr_report}
+
+```
+
+### Interpret results
+
+**Within the context of the intervening Great Recession, interpret the comparison between the standardized and un-standardized changes in sex-specific CDR from 2005 to 2015.**
+
+**Answer below:**
+
+
+
+## CDR decomposition
+
+### Computation
+
+**Decompose the change in the un-standardized crude death rate (CDR) from 2005 to 2015 into its age-specific mortality schedule and age structure effects for each sex, respectively, include both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
+
+```{r cdr_decomp_compute}
+
+```
+
+### Report results
+
+#### Age-specific effects
+
+**Report the age-specific decomposition results in a table below with the following structure:**
+
+* **`sex`: Male, Female, Total**
+* **`Age`: The start year of the age group**
+* **`m_effect`: The age-specific mortality schedule effect**
+* **`c_effect`: The age-specific age structure effect**
+* **`total_effect`: The total age-specific effect**
+
+```{r cdr_decomp_report_as}
+
+```
+
+#### Total effects
+
+**Report the decomposition results for all ages combined in a table below with the following structure:**
+
+* **`sex`: Male, Female, Total**
+* **`m_effect`: The age-specific mortality schedule effect**
+* **`c_effect`: The age-specific age structure effect**
+* **`total_effect`: The total age-specific effect**
+
+```{r cdr_decomp_report_total}
+
+```
+
+### Interpret results
+
+**Within the context of the intervening Great Recession, interpret the age-specific and total decompositions of the change in CDR from 2005 to 2015.**
+
+**Answer below:**
+
+
+
+# Age-specific probabilities of death from Lexis triangles
+
+## Computation
+
+**For each sex (including all sexes combined) in each age group in which this is possible, use the U.S. 2015 age-specific Lexis triangle death counts and exposures (i.e., age-specific death count by birth cohort) to directly calculate the age-specific probability of death (i.e. ${}_nq_x$).**
+
+```{r as_probs_compute}
+
+```
+
+## Report results
+
+**Report the results below in a table with the following structure:**
+
+* **`Age`: The starting age of the age group**
+* **`qx_[m/f/b]`: Separate columns for the ${}_nq_x$ values of males (`m`), females (`f`) and both sexes combined (`b`)**
+
+```{r as_probs_report}
+
+```
+
+# Total Fertility Rate (TFR) from parity progression ratios (PPR) vs. age-specific fertility rates (ASFRs)
+
+# PPR trend
+
+**Below is a plot of the PPRs for parity 0 through 3 comparing 1918, 1953, and 1968.**
 
 ```{r}
 
 ```
 
 
+# TFR vs. gross reproduction rate (GRR) vs. net reproduction rate (NRR)
+
+# Multiple decrement table for U.S. 2015: Deaths by despair vs. all other causes
+
+# Cause-deleted life table for U.S. 2015 without deaths by despair
+
+# Population projection from 2005 to 2015
+
+# Stable equivalent population predictions with and without a COVID-19 baby bust
+
+# Population momentum in 2019
