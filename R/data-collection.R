@@ -7,7 +7,7 @@ library(readr)
 library(tidyr)
 
 # US age-specific start-of-year population counts ----
-periods <- c(2005:2016)
+periods <- c(1905:2016)
 us_population <- HMDHFDplus::readHMDweb(
   CNTRY = "USA",
   item = "Population5",
@@ -79,19 +79,8 @@ us_deaths_lexis <- HMDHFDplus::readHMDweb(
     username = keyring::key_list("human-mortality-database")$username
   )
 ) %>%
-  dplyr::filter(Year %in% c(2015:2016))
-
-# U.S. person-years by Lexis triangles ----
-us_exposures_lexis <- HMDHFDplus::readHMDweb(
-  CNTRY = "USA",
-  item = "Exposures_lexis",
-  username = keyring::key_list("human-mortality-database")$username,
-  password = keyring::key_get(
-    service = "human-mortality-database",
-    username = keyring::key_list("human-mortality-database")$username
-  )
-) %>%
-  dplyr::filter(Year %in% c(2015:2016))
+  dplyr::filter(Year == 2015) %>%
+  dplyr::select(-Year)
 
 # US age-specific fertility ----
 us_asfr <- HMDHFDplus::readHFDweb(
@@ -129,8 +118,37 @@ us_ppr <- HMDHFDplus::readHFDweb(
 ) %>%
   dplyr::filter(Cohort %in% c(1918, 1943, 1968))
 
-# 5x5 life tables for males and females in the U.S. in 2005 ----
-us_mltper_5x5
+# 5x5 life tables for males, females, and both sexes combined ----
+us_mltper <- HMDHFDplus::readHMDweb(
+  CNTRY = "USA",
+  item = "mltper_5x1",
+  username = keyring::key_list("human-mortality-database")$username,
+  password = keyring::key_get(
+    service = "human-mortality-database",
+    username = keyring::key_list("human-mortality-database")$username
+  )
+) %>%
+  dplyr::filter(Year %in% periods)
+us_fltper <- HMDHFDplus::readHMDweb(
+  CNTRY = "USA",
+  item = "fltper_5x1",
+  username = keyring::key_list("human-mortality-database")$username,
+  password = keyring::key_get(
+    service = "human-mortality-database",
+    username = keyring::key_list("human-mortality-database")$username
+  )
+) %>%
+  dplyr::filter(Year %in% periods)
+us_bltper <- HMDHFDplus::readHMDweb(
+  CNTRY = "USA",
+  item = "bltper_5x1",
+  username = keyring::key_list("human-mortality-database")$username,
+  password = keyring::key_get(
+    service = "human-mortality-database",
+    username = keyring::key_list("human-mortality-database")$username
+  )
+) %>%
+  dplyr::filter(Year %in% periods)
 
 # Write list of data sets to .rds
 saveRDS(mget(ls()), "data/final_data.rds")

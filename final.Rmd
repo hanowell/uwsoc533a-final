@@ -16,6 +16,12 @@ output:
 *  **Write all of your code in the .Rmd file, with zero dependencies on external files other than the `final_data` object that I created, and that you will load in from a GitHub URL.**
 * **Use your best judgment on the number of significant figures to include in your reported results. Don't just report the default. Think about the context and any comparisons you are making, as well as the scale of the measurements, and then choose an appropriate display precision and unit of measurement.**
 * **Write your code, display your results, and interpret results in the areas indicated in the instructions of each problem.**
+* **Do not just print out the `data.frame` of results. Put your results into a formatted table using `kable` or a similar package.**
+* **Read [about the data](#about-the-data) before starting the problems to understand what data is available to you.**
+
+# Spoiler alert
+
+**You will not have to construct any (parent single decrement) life tables during this final. We've been there and done that.** 
 
 # Setup
 
@@ -61,7 +67,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_asfr`
 
-**Period age-specific fertility rates (ASFRs) for the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+**Annual period age-specific fertility rates (ASFRs) for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which ASFR was measured**
 * **`Age`: Starting age of one-year age group applicable to `ASFR` in `Year`**
@@ -70,7 +76,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_asmr`
 
-**Period age-specific mortality rates (ASMRs) by sex for the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+**Annual period age-specific mortality rates (ASMRs) by sex for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which ASMR was measured**
 * **`Age`: Starting age of one-year age group applicable to ASMR in `Year`**
@@ -81,7 +87,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_births`
 
-**Period age-specific birth counts on January 1st in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+**Annual period age-specific birth counts on January 1st  for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which births were counted on 1 January**
 * **`Age`: Starting age of one-year age group applicable to birth count in `Year`**
@@ -90,7 +96,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_deaths`
 
-**Period age-specific death counts on January 1st in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+**Annual period age-specific death counts for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which death count was measured**
 * **`Age`: Starting age of one-year age group applicable to death count in `Year`**
@@ -101,16 +107,15 @@ head(final_data[["us_asmr"]])
 
 ### `us_deaths_despair`
 
-**Period age-specific death counts due to "despair" (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) in the U.S. in 2015.**
+**Annual period age-specific death counts due to "despair" (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) in the U.S. in 2015.**
 
 * **`Age`: Starting age for the age group**
 * **`D_despair`: Number of deaths in `Age` group due to despair**
 
 ### `us_deaths_lexis`
 
-**Period age-specific death counts by birth cohort and sex in the U.S. in 2015.**
+**Annual period age-specific death counts by birth cohort and sex in the U.S. in 2015.**
 
-* **`Year`: The one-year period during which cohort's age-specific death count was measured**
 * **`Age`: Starting age for the age group**
 * **`Cohort`: Birth cohort to which age-specific death count applies**
 * **`Female`: Female cohort- and age-specific death count**
@@ -120,7 +125,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_exposures`
 
-**Period age-specific person-year (ASPY) approximations by sex in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+**Annual period age-specific person-year (ASPY) approximations by sex for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which ASPY was measured**
 * **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
@@ -129,21 +134,9 @@ head(final_data[["us_asmr"]])
 * **`Total`: Total ASPY for the `Age` group in `Year`**
 * **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
 
-### `us_exposures_lexis`
-
-**Period age-specific person-year (ASPY) approximations by birth cohort sex in the U.S. in 2015.**
-
-* **`Year`: The one-year period during which ASPY was measured**
-* **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
-* **`Cohort`: Birth cohort to which age-specific death count applies**
-* **`Female`: Female ASPY for the `Age` group and cohort in `Year`**
-* **`Male`: Male ASPY for the `Age` group and cohort in `Year`**
-* **`Total`: Total ASPY for the `Age` group and cohort in `Year`**
-* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
-
 ### `us_population`
 
-**Age-specific population counts by sex and day of year (January 1st vs. December 31st) by sex in the U.S. in 1918, 1843, 1968, 2005, 2015, 2016, and 2019, respectively.**
+**Age-specific population counts by sex and day of year (January 1st vs. December 31st) for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which population counts were measured**
 * **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
@@ -163,11 +156,15 @@ head(final_data[["us_asmr"]])
 * **`PPR[A]_[B]`: Parity progression ratio for moving from parity `A` to parity `B`**
 * **`OpenInterval`: I'm guessing this is an indicator for whether or not the birth `Cohort` is still open; just assume that all of these cohorts have completed their reproductive lifespan**
 
-# Age-specific person-year (ASPY) approximations {#aspy-approx}
+### `us_fltper`, `us_mltper`, and `us_bltper`
+
+**These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1905 through 2016. They have all of the columns you expect from a life table, with `Age` being the starting age of each age group, and `Year` referring to your annual period from which the life table caluclated.**
+
+# Annual age-specific person-year (ASPY) approximations {#aspy-approx}
 
 ## Computation
 
-**Use the population counts provided from the appropriate period(s) to approximate the age-specific person-years (ASPY) lived during each calendar year period between 1 January 2005 and 1 January 2015 under the following assumptions:**
+**Use the population counts provided to approximate for each sex (and for both sexes combined) the age-specific person-years (ASPY) lived during each individual calendar year period between 1 January 2005 and 1 January 2015, respectively, under the following assumptions:**
 
 * **Linear (and constant) growth in person-years during the period**
 * **Constant (but not necessarily linear) growth in person-years during the period**
@@ -178,12 +175,12 @@ head(final_data[["us_asmr"]])
 
 ## Report results
 
-**Report the results for 2015 below along with the HMD's person-year approximations in a table with the following structure:**
+**Report total age-specific person-years lived in the 2015 calendar-year period below in a table with the following structure:**
 
 * **`Age` as defined in the original dataset**
 * **`py_linear`: The linear growth approximation of ASPY**
 * **`py_constant`: The constant growth approximation of ASPY**
-* **`py_hmd`: The ASPY approximation from the original HMD data source**
+* **`py_hmd`: The ASPY approximation for the same population and period from the original HMD data source (i.e. `us_exposures`)**
 
 ```{r aspy_approx_report}
 
@@ -192,20 +189,21 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Compare these three ASPY approximations in terms of their overall similarity or dissimilarity to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.**
+**For the 2015 total population, compare these three age-specific ASPY approximations to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.**
 
 **Answer below:**
 
 
 
-# Age-specific and population crude growth rate (CGR) approximations {#cgr_approx}
+# Annual crude growth rate (CGR) approximations by age and for the total population {#cgr_approx}
 
 ## Computation
 
-**Using the person-year approximations you made in the [previous problem](#aspy-approx), estimate the age-specific and population CGR, respectively, from 2015 to 2016 under the following assumptions, respectively:**
+**Using the person-year approximations you made in the [previous problem](#aspy-approx), estimate the annual CGR for each age and sex as well as for the total population for each calendar year period from 2005 through 2015 using all three person-year approximations, respectively:**
 
 * **Linear (and constant) growth in person-years during the period**
 * **Constant (but not necessarily linear) growth in person-years during the period**
+* **Person-years as approximated by the HMD**
 
 ```{r cgr_approx_compute}
 
@@ -215,7 +213,7 @@ head(final_data[["us_asmr"]])
 
 ### Age-specific CGR
 
-**Report the age-specific CGR results in a table below with the following structure:**
+**Report the age-specific CGR results for both sexes combined for 2015 in a table below with the following structure:**
 
 * **`Age` as defined in the original dataset**
 * **`cgr_linear`: age-specific CGR under the linear growth approximation of ASPY**
@@ -228,10 +226,12 @@ head(final_data[["us_asmr"]])
 
 ### Population CGR
 
-**Report the CGR results for the total population in a table below with the following structure:**
+**Report the CGR results for the total population (both sexes combined) in a table below with the following structure:**
 
-* **`Method`: The person-years approximation method used; (values will be Linear, Constant growth, HMD, respectively)**
-* **`CGR`: Crude growth rate as approximated by the `Method` indicated**
+* **`Year`: The calendar-year period to which the CGR estimates apply**
+* **`cgr_linear`: CGR under the linear growth approximation of ASPY**
+* **`cgr_constant`: CGR under the constant growth approximation of ASPY**
+* **`cgr_hmd`: CGR using ASPY from the original HMD data source**
 
 ```{r cgr_approx_report_total}
 
@@ -239,7 +239,7 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Using the CGR as calculated using the HMD person-years approximation, describe the age-specific pattern of population growth between 2015 and 2016 as compared to the total population growth during that period. Describe the robustness of those results to the person-year approximation method.**
+**Describe the temporal pattern in CGR (as calculated from the HMD person-years approximations) from 2005 through 2015. Describe at least two alternative hypotheses for the pattern you see.**
 
 **Answer below:**
 
@@ -249,7 +249,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**Compute the principal period rates that contributed to the population (i.e. not age-specific) CGR from 2015 to 2016. Hint: You will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
+**For each sex and for both sexes combined, compute the principal period rates that contributed to the CGR (not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
 
 ```{r principal_rates_compute}
 
@@ -257,29 +257,34 @@ head(final_data[["us_asmr"]])
 
 ## Report results
 
-**Report your results in a table below with the following structure:**
+**Report your results for both sexes combined in a table below with the following structure:**
 
-* **`rate_name`: The row values will be CBR, CDR, CRNM**
-* **`rate_value`: The value of the prinicpal rate indicated by `rate_name`**
+* **`Year`: The year to which the principal period rates apply**
+* **`cbr/cdr/cnmr`: Separate columns for each of the principal period rates of interest**
 
-# Pre- and post- Great Recession mortality conditions
+## Interpret results
 
-## Age-standardized crude death rate (CDR)
+**Expand on your interpretation of the CGR results from the [previous problem](#cgr_approx) in light of the patterns you see in the principal period rates.**
 
-### Computation
+**Answer below:**
 
-**Using 2005 as the standard, compute the un-standardized and age-standardized CDRs by sex (including both combined) for 2005 and 2015.**
+
+
+# Age-standardized crude death rate (CDR) before, during, and recovering from the Great Recession
+
+## Computation
+
+**Using 2005 as a baseline standard, compute the age-standardized CDRs by sex (including both combined) for each of the calendar years from 2005 through 2015.**
 
 ```{r ascdr_compute}
 
 ```
 
-### Report results
+## Report results
 
-**Report your results in a table below with the following structure:**
+**Report your results in three tables below (one for males, one for females, one for both sexes), each with the following structure:**
 
 * **`Year`: The year of the CGR estimate**
-* **`sex`: The sex to which the CGR estimate applies: Male, Female, Total**
 * **`cgr`: The un-standardized CGR**
 * **`ascgr`: The standardized CGR**
 
@@ -287,31 +292,30 @@ head(final_data[["us_asmr"]])
 
 ```
 
-### Interpret results
+## Interpret results
 
-**Within the context of the intervening Great Recession, interpret the comparison between the standardized and un-standardized changes in sex-specific CDR from 2005 to 2015.**
+**Within the context of the Great Recession, construct at least one hypothesis to explain the comparison between the temporal patterns in standardized vs. un-standardized CDR from 2005 through 2015.**
 
 **Answer below:**
 
 
 
-## CDR decomposition
+# CDR difference decomposition, 2015 vs. 2005
 
-### Computation
+## Computation
 
-**Decompose the change in the un-standardized crude death rate (CDR) from 2005 to 2015 into its age-specific mortality schedule and age structure effects for each sex, respectively, include both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
+**Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, include both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
 
 ```{r cdr_decomp_compute}
 
 ```
 
-### Report results
+## Report results
 
-#### Age-specific effects
+### Age-specific effects
 
-**Report the age-specific decomposition results in a table below with the following structure:**
+**Report the age-specific decomposition results in three tables below (one for males, one for females, one for both sexes combined), each with the following structure:**
 
-* **`sex`: Male, Female, Total**
 * **`Age`: The start year of the age group**
 * **`m_effect`: The age-specific mortality schedule effect**
 * **`c_effect`: The age-specific age structure effect**
@@ -321,11 +325,11 @@ head(final_data[["us_asmr"]])
 
 ```
 
-#### Total effects
+### Total effects
 
 **Report the decomposition results for all ages combined in a table below with the following structure:**
 
-* **`sex`: Male, Female, Total**
+* **`sex`: One row for Male, Female, and Total, respectively**
 * **`m_effect`: The age-specific mortality schedule effect**
 * **`c_effect`: The age-specific age structure effect**
 * **`total_effect`: The total age-specific effect**
@@ -334,9 +338,9 @@ head(final_data[["us_asmr"]])
 
 ```
 
-### Interpret results
+## Interpret results
 
-**Within the context of the intervening Great Recession, interpret the age-specific and total decompositions of the change in CDR from 2005 to 2015.**
+**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decompositions of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you.**
 
 **Answer below:**
 
@@ -346,7 +350,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**For each sex (including all sexes combined) in each age group in which this is possible, use the U.S. 2015 age-specific Lexis triangle death counts and exposures (i.e., age-specific death count by birth cohort) to directly calculate the age-specific probability of death (i.e. ${}_nq_x$).**
+**For each sex (including all sexes combined), use the period birth counts (`us_births`) and the 2015 age-specific Lexis triangle death counts (`us_deaths_lexis`) to directly calculate the age-specific probabilities of death (i.e. ${}_nq_x$) for all age groups.**
 
 ```{r as_probs_compute}
 
@@ -398,7 +402,7 @@ head(final_data[["us_asmr"]])
 
 # PPR trend
 
-**Below is a plot of the PPRs for parity 0 through 3 comparing 1918, 1953, and 1968.**
+**Below is a plot of the PPRs for parity 0 through 3 comparing 1918, 1943, and 1968.**
 
 ```{r ppr_plot, echo=FALSE, warning=FALSE, message=FALSE}
 final_data[["us_ppr"]] %>%
@@ -421,7 +425,7 @@ final_data[["us_ppr"]] %>%
   ggplot2::theme(panel.grid = element_blank())
 ```
 
-## 1918 vs. both later birth cohorts
+## PPRs for 1918 vs. both later birth cohorts
 
 **With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curve of 1918 vs. both of the later cohorts.**
 
@@ -429,7 +433,7 @@ final_data[["us_ppr"]] %>%
 
 
 
-## Explain the differences between the PPR curve
+## PPRs for 1943 vs. 1968
 
 **With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curves of 1943 and 1968.**
 
@@ -437,11 +441,11 @@ final_data[["us_ppr"]] %>%
 
 
 
-# TFR, gross reproduction rate (GRR), net reproduction rate (NRR), and crude birth rate (CBR)
+# TFR, gross reproduction rate (GRR), net reproduction rate (NRR), generality fertility rate (GFR), and crude birth rate (CBR)
 
 ## Computation
 
-**Calculate the TFR, GRR, NRR, GFR, and CBR for all of the periods for which you have the necessary data (1918, 1943, 1968, 2005, 2015, 2016, and 2019). Yes, you can estimate each of these using the data provided.**
+**Calculate the TFR, GRR, NRR, and GFR for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided.**
 
 ```{r fertility_and_reproduction_compute}
 
@@ -452,7 +456,7 @@ final_data[["us_ppr"]] %>%
 **Report the results below in a table with the following structure:**
 
 * **`Year`: The period for which the rate applies**
-* **`[tfr/grr/gfr/cbr]`: Four separate columns for each of the period rates requested**
+* **`[tfr/grr/nrr/gfr/cbr]`: Five separate columns for each of the period rates requested**
 
 ```{r fertility_and_reproduction_report}
 
@@ -460,7 +464,7 @@ final_data[["us_ppr"]] %>%
 
 ## How well does the rule of thumb GFR = CBR/0.25  predict actual GFR?
 
-**Answer below (you can compare the two simply by summarizing their differences, if you like):**
+**Answer below (you can compare the two simply by summarizing the central tendency and dispersion of their differences, if you like, but feel free to get creative):**
 
 
 
@@ -468,12 +472,12 @@ final_data[["us_ppr"]] %>%
 
 ## Computation
 
-**Using whatever single decrement table method you desire (so long as it produces valid ${}_nq_x$ values), construct multiple decrement table for deaths by despair vs. all other causes, for both sexes combined.**
+**Using the appropriate sex-specific parent life tables provided, construct sex-specific (including both sexes combined) multiple decrement tables for deaths by despair vs. all other causes.**
 
 **Hints:**
 
 * **You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates. You should definitely save the single decrement table columns for later.**
-* **The despair death count's open-ended age interval is younger than the open-ended interval for the all-cause mortality data. You'll need to redefine the open-ended age interval for the all-cause mortality rates accordingly. To do that, you'll need to aggregate the all-cause death counts and exposures accordingly to recalculate the mortality rates for the younger open-ended age interval.**
+* **The despair death count's open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just assume that the death count ratio for the open-ended interval in the life table is the same as it is for open-ended interval in the cause-specific death count data.**
 
 ```{r multiple_decrement_compute}
 
@@ -481,7 +485,7 @@ final_data[["us_ppr"]] %>%
 
 ## Report results
 
-**Report the cause-specific multiple decrement table columns by age `x`, i.e., `mx_[d/o]`, `dx_[d/o]`, and `lx_[d/o]`, where `d` is for "despair" and `o` is for "other" causes of death, respectively.**
+**For each sex (including both sexes combined), report a separate cause-specific multiple decrement table with column `Age`, as well as columns `mx_[d/o]`, `dx_[d/o]`, and `lx_[d/o]`, where `d` is for "despair" and `o` is for "other" causes of death, respectively. These column naming conventions should be familiar to you by now.**
 
 ```{r multiple_decrement_report}
 
@@ -489,15 +493,17 @@ final_data[["us_ppr"]] %>%
 
 ## Interpret results
 
-**Describe the age pattern of age-specific mortality of probability of death due to despair compared to deaths due to all other causes.**
+**Describe the age pattern of age-specific mortality of probability of death due to despair compared to deaths due to all other causes. Highlight any differences between the sexes that stand out to you.**
 
 **Answer below:**
+
+
 
 # Cause-deleted life table for U.S. 2015 without deaths by despair
 
 ## Compute
 
-**Employing the proportional hazards assumption and accompanying procedure that we learned in class, construct a cause-deleted life table that excludes mortality due to despair.**
+**Employing the proportional hazards assumption and accompanying procedure that we learned in class, construct a cause-deleted life table for each sex (including both sexes combined) that excludes mortality due to despair.**
 
 ```{r cause_deleted_compute}
 
@@ -505,7 +511,7 @@ final_data[["us_ppr"]] %>%
 
 ## Report results
 
-**Report the cause-deleted life table below with the typical life table columns that we've reported so many times in previous assignments.**
+**For each sex (including both sexes combined), report a cause-deleted life table below with the typical life table columns that we've reported so many times in previous assignments (only they should be calculated for the cause-deleted case, of course).**
 
 ```{r cause_deleted_report}
 
@@ -513,7 +519,7 @@ final_data[["us_ppr"]] %>%
 
 ## Interpret results
 
-**With reference to the parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60.**
+**With reference to the appropriate sex-specific parent life tables, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60. Highlight any differences by sex that stand out to you.**
 
 **Answer below**
 
