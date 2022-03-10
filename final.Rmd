@@ -12,8 +12,6 @@ output:
 
 # Instructions
 
-**Not following these instructions may result in you doing more work than you need to do. It may also result in deduction of points, but most likely I'll just ask you to correct the error and turn in an amended final for full credit.**
-
 * **Complete the problem sets below.**
 *  **Write all of your code in the `.Rmd` file that you will turn in with the knitted `html` file, with zero dependencies on external files other than the `final_data` object that I created, and that you will load in from a GitHub URL.**
 * **Use your best judgment on the number of significant figures to include in your reported results. Don't just report the default. Think about the context and any comparisons you are making, as well as the scale of the measurements, and then choose an appropriate display precision and unit of measurement.**
@@ -21,18 +19,25 @@ output:
 * **Do not just print out the `data.frame` of results. Put your results into a formatted table using `kable` or a similar package.**
 * **Read [about the data](#about-the-data) before starting the problems to understand what data is available to you.**
 * **Save yourself some extra work by reusing previous results where applicable**
-* **Try to write your code as cleanly as possible, with comments about the steps you are taking along the way. The cleaner your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are horribly wrong.**
+* **Write your code as cleanly as possible, with comments about the steps you are taking along the way. The cleaner and better-explained your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are wrong.**
 * **Keep your written answers concise, but also specific to the question at hand.**
-* **Have fun?**
+* **For some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because you will likely use some of them on future questions.**
+
+**Not following these instructions may result in:**
+
+* **Doing more work than necessary**
+* **Partial loss of credit on particular responses**
+* **Having to amend your final and turn it in again for a loss of a half a point (e.g. if your `.Rmd` file is not self-contained or your reported tables are not formatted)**
 
 # Grading
 
 * **Every single task where I ask you to report or interpret the results is worth the same amount of points out of the total 23 points that is distributed across questions.**
 * **I will give half credit on reported results and three-quarters credit on interpreted results that are incorrect, but where you did the computation step mostly right (i.e. minor syntactical or logical error as opposed to serious conceptual error).**
-* **For some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because you will likely use some of them on future questions, and I'll also only give you half credit on results reported from incomplete computations.**
+* **Again, for some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because I'll also only give you half credit on results reported from incomplete computations.**
 * **I will give 10% credit to vaguely-worded written answers where it is hard to understand what you are saying at all.**
-* **I will forgive minor numerical errors entirely.**
+* **I will forgive minor rounding errors, etc., entirely.**
 * **Two freebie points for good-faith effort at completing the entire final.**
+* **There are opportunities for extra credit (and fun extra analysis) if you so desire.**
 
 # Spoiler alert
 
@@ -102,16 +107,23 @@ head(final_data[["us_asmr"]])
 
 ### `us_births`
 
-**Annual period age-specific birth counts on January 1st  for the U.S. from 1933 through 2016.**
+**Annual period age-specific birth counts for one-year age groups of mothers for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which births were counted on 1 January**
-* **`Age`: Starting age of one-year age group applicable to birth count in `Year`**
+* **`Age`: Starting age of one-year age group of the mother**
 * **`Total`: January 1st birth count for the `Age` group in `Year`**
 * **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the left or right**
 
+### `us_totbirths`
+
+**Annual period total birth counts for one-year age groups of mothers for the U.S. from 1933 through 2016.**
+
+* **`Year`: The one-year period during which births were counted on 1 January**
+* **`Total`: January 1st birth count in `Year`**
+
 ### `us_deaths`
 
-**Annual period age-specific death counts for the U.S. from 1933 through 2016.**
+**Annual period age-specific death counts for five-year age groups for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which death count was measured**
 * **`Age`: Starting age of one-year age group applicable to death count in `Year`**
@@ -122,14 +134,14 @@ head(final_data[["us_asmr"]])
 
 ### `us_deaths_despair`
 
-**Annual period age-specific death counts due to "despair" (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) in the U.S. in 2015.**
+**Annual period age-specific death counts due to "despair" (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) for five-year age groups for the U.S. in 2015.**
 
 * **`Age`: Starting age for the age group**
 * **`D_despair`: Number of deaths in `Age` group due to despair**
 
 ### `us_exposures`
 
-**Annual period age-specific person-year (ASPY) approximations by sex for the U.S. from 1933 through 2016.**
+**Annual period age-specific person-year (ASPY) approximations by sex for five-year age groups for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which ASPY was measured**
 * **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
@@ -140,7 +152,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_population`
 
-**Age-specific population counts by sex and day of year (January 1st vs. December 31st) for the U.S. from 1933 through 2016.**
+**Age-specific population counts by sex and day of year (January 1st vs. December 31st) for five-year age groups for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which population counts were measured**
 * **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
@@ -172,7 +184,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**Use the population counts provided to approximate for each sex (and for both sexes combined) the age-specific person-years (ASPY) lived during each individual calendar year period between 1 January 2005 and 1 January 2015, respectively, under the following assumptions:**
+**Use the population counts provided to approximate for each sex (and for both sexes combined) the age-specific person-years (ASPY) lived during each individual calendar year period between 1 January 2005 and 1 January 2016 (i.e. for 2005 through 2015), respectively, under the following assumptions:**
 
 * **Linear (and constant) growth in person-years during the period**
 * **Constant (but not necessarily linear) growth in person-years during the period**
@@ -197,7 +209,7 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**For the 2015 total population, compare these three age-specific ASPY approximations to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.**
+**For the 2015 total population, compare these three ASPY approximations to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.**
 
 **Answer below:**
 
@@ -234,7 +246,7 @@ head(final_data[["us_asmr"]])
 
 ### Population CGR
 
-**Report the CGR results for 2005 through 2015 for the total population (both sexes combined) in a table below with the following structure:**
+**Report the CGR results for 2005 through 2015 for the total population (both sexes combined, not age-specific) in a table below with the following structure:**
 
 * **`Year`: The calendar-year period to which the CGR estimates apply**
 * **`cgr_linear`: CGR under the linear growth approximation of ASPY**
@@ -247,7 +259,7 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Describe the temporal pattern in CGR (as calculated from the HMD person-years approximations) from 2005 through 2015. Describe at least two alternative hypotheses for the pattern you see.**
+**Describe the temporal pattern in CGR (as calculated from the HMD person-years approximations) from 2005 through 2015. Describe at least two alternative hypotheses for the pattern you see. You may refer only to the total population CGR trend, but I will give an extra point for correct reference and demonstration of any age-specific pattern in CGR.**
 
 **Answer below:**
 
@@ -257,7 +269,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**For both sexes combined, compute the principal period rates that contributed to the CGR (not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
+**For both sexes combined, compute the principal period rates that contributed to the CGR (both sexes combined, not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
 
 ```{r principal_rates_compute}
 
@@ -292,9 +304,9 @@ head(final_data[["us_asmr"]])
 
 **Report your results in three tables below (one for males, one for females, one for both sexes), each with the following structure:**
 
-* **`Year`: The year of the CGR estimate**
-* **`cgr`: The un-standardized CGR**
-* **`ascgr`: The standardized CGR**
+* **`Year`: The year of the CDR estimate**
+* **`cdr`: The un-standardized CDR**
+* **`ascdr`: The standardized CDR**
 
 ```{r ascdr_report}
 
@@ -302,7 +314,7 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Within the context of the Great Recession, construct at least one hypothesis to explain the comparison between the temporal patterns in standardized vs. un-standardized CDR from 2005 through 2015.**
+**Within the context of the Great Recession, construct at least one hypothesis to explain the comparison between the temporal patterns in standardized vs. un-standardized CDRs from 2005 through 2015.**
 
 **Answer below:**
 
@@ -312,7 +324,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, including both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
+**Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, including both sexes combined. Also compute the total mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
 
 ```{r cdr_decomp_compute}
 
@@ -337,7 +349,7 @@ head(final_data[["us_asmr"]])
 
 **Report the decomposition results for all ages combined in a table below with the following structure:**
 
-* **`sex`: One row for Male, Female, and Total, respectively**
+* **`sex`: One row for Male, Female, and Total, respectively, where "Total" means both sexes combined**
 * **`m_effect`: The age-specific mortality schedule effect**
 * **`c_effect`: The age-specific age structure effect**
 * **`total_effect`: The total age-specific effect**
@@ -348,7 +360,7 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decomposition of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the differences in the effects mean.**
+**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decomposition of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the sex differences in the effects mean.**
 
 **Answer below:**
 
@@ -375,13 +387,13 @@ head(final_data[["us_asmr"]])
 
 ```
 
-## What extra data do we need to calculate the cohort TFR correctly from PPRs?
+## What extra data do we need beyond what is available to calculate the cohort TFR correctly from PPRs?
 
 **Answer below:**
 
 
 
-## What would have to be true about parity above 4 for the cohort TFRs you calculated to be correct?
+## What would have to be true about PPRs above parity 4 for the cohort TFRs you calculated to be correct?
 
 **Answer below:**
 
@@ -414,7 +426,7 @@ final_data[["us_ppr"]] %>%
 
 ## PPRs for 1918 vs. both later birth cohorts
 
-**With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curve of 1918 vs. both of the later cohorts.**
+**With reference to definition of a PPR and the proximate determinants of fertility, provide at least one potential explanation for the differences between the PPR curve of 1918 vs. both of the later cohorts.**
 
 **Answer below:**
 
@@ -422,7 +434,7 @@ final_data[["us_ppr"]] %>%
 
 ## PPRs for 1943 vs. 1968
 
-**With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curves of 1943 and 1968.**
+**With reference to definition of a PPR and the proximate determinants of fertility, provide at least one potential explanation for the differences between the PPR curves of 1943 and 1968.**
 
 **Answer below:**
 
@@ -432,7 +444,12 @@ final_data[["us_ppr"]] %>%
 
 ## Computation
 
-**Calculate the TFR, GRR, NRR, GFR, and GFRc (GFR estimated from CBR assuming ${}_{\beta - n}C_\alpha = 0.25 = c$) for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided, even if you have to do some of the estimation indirectly. Feel free to assume the sex ratio at birth (SRB) is a constant 1.05 males per female. Hint: It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and $p(A_m)$.**
+**Calculate the TFR, GRR, NRR, GFR, and GFRc (GFR estimated from CBR assuming ${}_{\beta - n}C_\alpha = 0.25 = C$) for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided, even if you have to do some of the estimation indirectly. Feel free to assume the sex ratio at birth (SRB) is a constant 1.05 males per female.**
+
+**Hints:**
+
+* **Remember that some of these period rates are functions of each other**
+* **It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and $p(A_m)$**
 
 ```{r fertility_and_reproduction_compute}
 
@@ -443,7 +460,7 @@ final_data[["us_ppr"]] %>%
 **Report the results below in a table with the following structure:**
 
 * **`Year`: The period for which the rate applies**
-* **`[tfr/grr/nrr/gfr/cbr/gfr_c]`: Five separate columns for each of the period rates requested, including the actual GFR and the GFT estimated assuming that ${}_{\beta - n}C_\alpha = 0.25 = c$.**
+* **`[tfr/grr/nrr/gfr/cbr/gfr_c]`: Six separate columns for each of the period rates requested**
 
 ```{r fertility_and_reproduction_report}
 
@@ -463,8 +480,8 @@ final_data[["us_ppr"]] %>%
 
 **Hints:**
 
-* **You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates. You should definitely save the single decrement table columns for later.**
-* **The despair death count's open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just assume that the death count ratio for the open-ended interval in the life table is the same as it is for open-ended interval in the cause-specific death count data.**
+* **You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates.* **
+* **The despair death count's open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just make a simple assumption to impute the despair mortality for the open-ended interval in the life table (e.g. assume that the hazard ratios for the extra age intervals in the life table are the same as it is for open-ended interval in the cause-specific death count data).**
 
 ```{r multiple_decrement_compute}
 
@@ -506,7 +523,7 @@ final_data[["us_ppr"]] %>%
 
 ## Interpret results
 
-**With reference to the appropriate parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60.**
+**With reference to the appropriate parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy at birth, age 20, and age 40; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60. Hint: Relative differences or ratios may in some ways be more informative than differences, and vice versa.**
 
 **Answer below**
 
@@ -521,13 +538,36 @@ final_data[["us_ppr"]] %>%
 **Hints:**
 
 * **You will need to project over two five-year intervals!**
-* **Your open-ended age interval for the projection needs to be five years younger than the open-ended age interval for your life tables, which means you'll need to aggregate the starting population counts accordingly.**
-* **Your age groups need to be uniformly five-years in length, so again you need to aggregate the starting population counts accordingly.**
-* **I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group's person-years columns into uniform five-year age groups.**
-* **You will need to aggregate birth rates into five-year age groups. I suggest assuming that $\alpha = 15$ and $\beta = 55$, meaning you will need to calculate birth rates for five-year age groups from starting ages 15 your 50, in five-year increments.**
+* **When comparing your projection to the actual 2015 population counts, remember to aggregate the 0-1 and 1-5 age groups into a 0-5 group.**
+* **I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group's person-years columns into uniform five-year age groups. I've done this for you below, effectively dropping ages 12-14 and the oldest age group, which should have minimal effect on the projection since fertility is so low in those groups.**
+* **I've also give you the actual population counts in 2015 for uniform five-year age groups**
 
 ```{r projection_compute}
-
+# Five-year birth counts, female exposures, and ASFR in 2005
+five_year_asmr_2005 <- final_data[["us_births"]] %>%
+  dplyr::filter(Year == 2005, Age %>% dplyr::between(15, 49)) %>%
+  dplyr::select(Age, Total) %>%
+  dplyr::mutate(
+    Age = Age %>%
+      cut(breaks = seq(15, 50, 5), right = FALSE, labels = seq(15, 45, 5)) %>%
+      as.character() %>%
+      as.integer()
+  ) %>%
+  dplyr::with_groups(Age, summarize, births = sum(Total)) %>%
+  dplyr::left_join(
+    final_data[["us_exposures"]] %>%
+      dplyr::filter(Year == 2005) %>%
+      dplyr::select(Age, Female)
+  ) %>%
+  dplyr::mutate(ASFR = births/Female)
+# Population counts by uniform five-year age intervals
+pop_counts_actual_2015 <- final_data[["us_population"]] %>%
+  dplyr::filter(Year == 2015) %>%
+  dplyr::select(Age, Female1) %>%
+  dplyr::mutate(Age = if_else(Age < 5, 0L, Age)) %>%
+  dplyr::with_groups(Age, summarize, actual_size = sum(Female1))
+# Proceed with your projection code below:
+# ...
 ```
 
 ## Report results

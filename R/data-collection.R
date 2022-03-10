@@ -93,6 +93,18 @@ us_births <- HMDHFDplus::readHFDweb(
 ) %>%
   dplyr::filter(Year %in% periods)
 
+# US total births ----
+us_totbirths <- HMDHFDplus::readHFDweb(
+  CNTRY = "USA",
+  item = "totbirthsRR",
+  username = keyring::key_list("human-fertility-database")$username,
+  password = keyring::key_get(
+    service = "human-fertility-database",
+    username = keyring::key_list("human-fertility-database")$username
+  )
+) %>%
+  dplyr::filter(Year %in% periods)
+
 # US parity progression ratios for birth cohorts 1918, 1943, and 1968 ----
 us_ppr <- HMDHFDplus::readHFDweb(
   CNTRY = "USA",
@@ -148,6 +160,8 @@ us_fltper_2009 <- HMDHFDplus::readHMDweb(
   )
 ) %>%
   dplyr::filter(Year == 2009)
+
+rm(periods)
 
 # Write list of data sets to .rds
 saveRDS(mget(ls()), "data/final_data.rds")

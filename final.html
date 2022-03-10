@@ -250,7 +250,6 @@ div.tocify {
 
 <div id="instructions" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Instructions</h1>
-<p><strong>Not following these instructions may result in you doing more work than you need to do. It may also result in deduction of points, but most likely I’ll just ask you to correct the error and turn in an amended final for full credit.</strong></p>
 <ul>
 <li><strong>Complete the problem sets below.</strong></li>
 <li><strong>Write all of your code in the <code>.Rmd</code> file that you will turn in with the knitted <code>html</code> file, with zero dependencies on external files other than the <code>final_data</code> object that I created, and that you will load in from a GitHub URL.</strong></li>
@@ -259,9 +258,15 @@ div.tocify {
 <li><strong>Do not just print out the <code>data.frame</code> of results. Put your results into a formatted table using <code>kable</code> or a similar package.</strong></li>
 <li><strong>Read <a href="#about-the-data">about the data</a> before starting the problems to understand what data is available to you.</strong></li>
 <li><strong>Save yourself some extra work by reusing previous results where applicable</strong></li>
-<li><strong>Try to write your code as cleanly as possible, with comments about the steps you are taking along the way. The cleaner your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are horribly wrong.</strong></li>
+<li><strong>Write your code as cleanly as possible, with comments about the steps you are taking along the way. The cleaner and better-explained your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are wrong.</strong></li>
 <li><strong>Keep your written answers concise, but also specific to the question at hand.</strong></li>
-<li><strong>Have fun?</strong></li>
+<li><strong>For some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because you will likely use some of them on future questions.</strong></li>
+</ul>
+<p><strong>Not following these instructions may result in:</strong></p>
+<ul>
+<li><strong>Doing more work than necessary</strong></li>
+<li><strong>Partial loss of credit on particular responses</strong></li>
+<li><strong>Having to amend your final and turn it in again for a loss of a half a point (e.g. if your <code>.Rmd</code> file is not self-contained or your reported tables are not formatted)</strong></li>
 </ul>
 </div>
 <div id="grading" class="section level1" number="2">
@@ -269,10 +274,11 @@ div.tocify {
 <ul>
 <li><strong>Every single task where I ask you to report or interpret the results is worth the same amount of points out of the total 23 points that is distributed across questions.</strong></li>
 <li><strong>I will give half credit on reported results and three-quarters credit on interpreted results that are incorrect, but where you did the computation step mostly right (i.e. minor syntactical or logical error as opposed to serious conceptual error).</strong></li>
-<li><strong>For some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because you will likely use some of them on future questions, and I’ll also only give you half credit on results reported from incomplete computations.</strong></li>
+<li><strong>Again, for some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because I’ll also only give you half credit on results reported from incomplete computations.</strong></li>
 <li><strong>I will give 10% credit to vaguely-worded written answers where it is hard to understand what you are saying at all.</strong></li>
-<li><strong>I will forgive minor numerical errors entirely.</strong></li>
+<li><strong>I will forgive minor rounding errors, etc., entirely.</strong></li>
 <li><strong>Two freebie points for good-faith effort at completing the entire final.</strong></li>
+<li><strong>There are opportunities for extra credit (and fun extra analysis) if you so desire.</strong></li>
 </ul>
 </div>
 <div id="spoiler-alert" class="section level1" number="3">
@@ -341,17 +347,25 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 </div>
 <div id="us_births" class="section level3" number="6.4.3">
 <h3><span class="header-section-number">6.4.3</span> <code>us_births</code></h3>
-<p><strong>Annual period age-specific birth counts on January 1st for the U.S. from 1933 through 2016.</strong></p>
+<p><strong>Annual period age-specific birth counts for one-year age groups of mothers for the U.S. from 1933 through 2016.</strong></p>
 <ul>
 <li><strong><code>Year</code>: The one-year period during which births were counted on 1 January</strong></li>
-<li><strong><code>Age</code>: Starting age of one-year age group applicable to birth count in <code>Year</code></strong></li>
+<li><strong><code>Age</code>: Starting age of one-year age group of the mother</strong></li>
 <li><strong><code>Total</code>: January 1st birth count for the <code>Age</code> group in <code>Year</code></strong></li>
 <li><strong><code>OpenInterval</code>: Boolean indicator for whether or not the age interval is open to the left or right</strong></li>
 </ul>
 </div>
-<div id="us_deaths" class="section level3" number="6.4.4">
-<h3><span class="header-section-number">6.4.4</span> <code>us_deaths</code></h3>
-<p><strong>Annual period age-specific death counts for the U.S. from 1933 through 2016.</strong></p>
+<div id="us_totbirths" class="section level3" number="6.4.4">
+<h3><span class="header-section-number">6.4.4</span> <code>us_totbirths</code></h3>
+<p><strong>Annual period total birth counts for one-year age groups of mothers for the U.S. from 1933 through 2016.</strong></p>
+<ul>
+<li><strong><code>Year</code>: The one-year period during which births were counted on 1 January</strong></li>
+<li><strong><code>Total</code>: January 1st birth count in <code>Year</code></strong></li>
+</ul>
+</div>
+<div id="us_deaths" class="section level3" number="6.4.5">
+<h3><span class="header-section-number">6.4.5</span> <code>us_deaths</code></h3>
+<p><strong>Annual period age-specific death counts for five-year age groups for the U.S. from 1933 through 2016.</strong></p>
 <ul>
 <li><strong><code>Year</code>: The one-year period during which death count was measured</strong></li>
 <li><strong><code>Age</code>: Starting age of one-year age group applicable to death count in <code>Year</code></strong></li>
@@ -361,17 +375,17 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <li><strong><code>OpenInterval</code>: Boolean indicator for whether or not the age interval is open to the right</strong></li>
 </ul>
 </div>
-<div id="us_deaths_despair" class="section level3" number="6.4.5">
-<h3><span class="header-section-number">6.4.5</span> <code>us_deaths_despair</code></h3>
-<p><strong>Annual period age-specific death counts due to “despair” (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) in the U.S. in 2015.</strong></p>
+<div id="us_deaths_despair" class="section level3" number="6.4.6">
+<h3><span class="header-section-number">6.4.6</span> <code>us_deaths_despair</code></h3>
+<p><strong>Annual period age-specific death counts due to “despair” (alcoholic liver disease, alcohol abuse, drug abuse, and suicide or self-inflicted injury) for five-year age groups for the U.S. in 2015.</strong></p>
 <ul>
 <li><strong><code>Age</code>: Starting age for the age group</strong></li>
 <li><strong><code>D_despair</code>: Number of deaths in <code>Age</code> group due to despair</strong></li>
 </ul>
 </div>
-<div id="us_exposures" class="section level3" number="6.4.6">
-<h3><span class="header-section-number">6.4.6</span> <code>us_exposures</code></h3>
-<p><strong>Annual period age-specific person-year (ASPY) approximations by sex for the U.S. from 1933 through 2016.</strong></p>
+<div id="us_exposures" class="section level3" number="6.4.7">
+<h3><span class="header-section-number">6.4.7</span> <code>us_exposures</code></h3>
+<p><strong>Annual period age-specific person-year (ASPY) approximations by sex for five-year age groups for the U.S. from 1933 through 2016.</strong></p>
 <ul>
 <li><strong><code>Year</code>: The one-year period during which ASPY was measured</strong></li>
 <li><strong><code>Age</code>: Starting age of one-year age group applicable to ASPY in <code>Year</code></strong></li>
@@ -381,9 +395,9 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <li><strong><code>OpenInterval</code>: Boolean indicator for whether or not the age interval is open to the right</strong></li>
 </ul>
 </div>
-<div id="us_population" class="section level3" number="6.4.7">
-<h3><span class="header-section-number">6.4.7</span> <code>us_population</code></h3>
-<p><strong>Age-specific population counts by sex and day of year (January 1st vs. December 31st) for the U.S. from 1933 through 2016.</strong></p>
+<div id="us_population" class="section level3" number="6.4.8">
+<h3><span class="header-section-number">6.4.8</span> <code>us_population</code></h3>
+<p><strong>Age-specific population counts by sex and day of year (January 1st vs. December 31st) for five-year age groups for the U.S. from 1933 through 2016.</strong></p>
 <ul>
 <li><strong><code>Year</code>: The one-year period during which population counts were measured</strong></li>
 <li><strong><code>Age</code>: Starting age of one-year age group applicable to ASPY in <code>Year</code></strong></li>
@@ -396,8 +410,8 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <li><strong><code>OpenInterval</code>: Boolean indicator for whether or not the age interval is open to the right</strong></li>
 </ul>
 </div>
-<div id="us_ppr" class="section level3" number="6.4.8">
-<h3><span class="header-section-number">6.4.8</span> <code>us_ppr</code></h3>
+<div id="us_ppr" class="section level3" number="6.4.9">
+<h3><span class="header-section-number">6.4.9</span> <code>us_ppr</code></h3>
 <p><strong>Parity progression ratios (PPRs) for baseline parity 0 through 3 for the U.S. 1918, 1943, and 1968 birth cohorts, respectively.</strong></p>
 <ul>
 <li><strong><code>Cohort</code>: Calendar year of birth cohort</strong></li>
@@ -405,12 +419,12 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <li><strong><code>OpenInterval</code>: I’m guessing this is an indicator for whether or not the birth <code>Cohort</code> is still open; just assume that all of these cohorts have completed their reproductive lifespan</strong></li>
 </ul>
 </div>
-<div id="us_fltper-us_mltper-and-us_bltper" class="section level3" number="6.4.9">
-<h3><span class="header-section-number">6.4.9</span> <code>us_fltper</code>, <code>us_mltper</code>, and <code>us_bltper</code></h3>
+<div id="us_fltper-us_mltper-and-us_bltper" class="section level3" number="6.4.10">
+<h3><span class="header-section-number">6.4.10</span> <code>us_fltper</code>, <code>us_mltper</code>, and <code>us_bltper</code></h3>
 <p><strong>These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1933 through 2016. They have all of the columns you expect from a life table, with <code>Age</code> being the starting age of each age group, and <code>Year</code> referring to your annual period from which the life table calculated.</strong></p>
 </div>
-<div id="us_fltper_2009" class="section level3" number="6.4.10">
-<h3><span class="header-section-number">6.4.10</span> <code>us_fltper_2009</code></h3>
+<div id="us_fltper_2009" class="section level3" number="6.4.11">
+<h3><span class="header-section-number">6.4.11</span> <code>us_fltper_2009</code></h3>
 <p><strong>Annual female life table for one-year age groups for the U.S. in 2009.</strong></p>
 </div>
 </div>
@@ -419,7 +433,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <h1><span class="header-section-number">7</span> Annual age-specific person-year (ASPY) approximations</h1>
 <div id="computation" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Computation</h2>
-<p><strong>Use the population counts provided to approximate for each sex (and for both sexes combined) the age-specific person-years (ASPY) lived during each individual calendar year period between 1 January 2005 and 1 January 2015, respectively, under the following assumptions:</strong></p>
+<p><strong>Use the population counts provided to approximate for each sex (and for both sexes combined) the age-specific person-years (ASPY) lived during each individual calendar year period between 1 January 2005 and 1 January 2016 (i.e. for 2005 through 2015), respectively, under the following assumptions:</strong></p>
 <ul>
 <li><strong>Linear (and constant) growth in person-years during the period</strong></li>
 <li><strong>Constant (but not necessarily linear) growth in person-years during the period</strong></li>
@@ -437,7 +451,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 </div>
 <div id="interpret-results" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Interpret results</h2>
-<p><strong>For the 2015 total population, compare these three age-specific ASPY approximations to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.</strong></p>
+<p><strong>For the 2015 total population, compare these three ASPY approximations to one another. Then discuss the implications of these results for the linear and constant growth assumptions, including any variation by age group if applicable.</strong></p>
 <p><strong>Answer below:</strong></p>
 </div>
 </div>
@@ -466,7 +480,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 </div>
 <div id="population-cgr" class="section level3" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Population CGR</h3>
-<p><strong>Report the CGR results for 2005 through 2015 for the total population (both sexes combined) in a table below with the following structure:</strong></p>
+<p><strong>Report the CGR results for 2005 through 2015 for the total population (both sexes combined, not age-specific) in a table below with the following structure:</strong></p>
 <ul>
 <li><strong><code>Year</code>: The calendar-year period to which the CGR estimates apply</strong></li>
 <li><strong><code>cgr_linear</code>: CGR under the linear growth approximation of ASPY</strong></li>
@@ -477,7 +491,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 </div>
 <div id="interpret-results-1" class="section level2" number="8.3">
 <h2><span class="header-section-number">8.3</span> Interpret results</h2>
-<p><strong>Describe the temporal pattern in CGR (as calculated from the HMD person-years approximations) from 2005 through 2015. Describe at least two alternative hypotheses for the pattern you see.</strong></p>
+<p><strong>Describe the temporal pattern in CGR (as calculated from the HMD person-years approximations) from 2005 through 2015. Describe at least two alternative hypotheses for the pattern you see. You may refer only to the total population CGR trend, but I will give an extra point for correct reference and demonstration of any age-specific pattern in CGR.</strong></p>
 <p><strong>Answer below:</strong></p>
 </div>
 </div>
@@ -485,7 +499,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <h1><span class="header-section-number">9</span> Principal period rates in 2015</h1>
 <div id="computation-2" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Computation</h2>
-<p><strong>For both sexes combined, compute the principal period rates that contributed to the CGR (not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can’t calculate it directly.</strong></p>
+<p><strong>For both sexes combined, compute the principal period rates that contributed to the CGR (both sexes combined, not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can’t calculate it directly.</strong></p>
 </div>
 <div id="report-results-2" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Report results</h2>
@@ -511,14 +525,14 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <h2><span class="header-section-number">10.2</span> Report results</h2>
 <p><strong>Report your results in three tables below (one for males, one for females, one for both sexes), each with the following structure:</strong></p>
 <ul>
-<li><strong><code>Year</code>: The year of the CGR estimate</strong></li>
-<li><strong><code>cgr</code>: The un-standardized CGR</strong></li>
-<li><strong><code>ascgr</code>: The standardized CGR</strong></li>
+<li><strong><code>Year</code>: The year of the CDR estimate</strong></li>
+<li><strong><code>cdr</code>: The un-standardized CDR</strong></li>
+<li><strong><code>ascdr</code>: The standardized CDR</strong></li>
 </ul>
 </div>
 <div id="interpret-results-3" class="section level2" number="10.3">
 <h2><span class="header-section-number">10.3</span> Interpret results</h2>
-<p><strong>Within the context of the Great Recession, construct at least one hypothesis to explain the comparison between the temporal patterns in standardized vs. un-standardized CDR from 2005 through 2015.</strong></p>
+<p><strong>Within the context of the Great Recession, construct at least one hypothesis to explain the comparison between the temporal patterns in standardized vs. un-standardized CDRs from 2005 through 2015.</strong></p>
 <p><strong>Answer below:</strong></p>
 </div>
 </div>
@@ -526,7 +540,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <h1><span class="header-section-number">11</span> CDR difference decomposition, 2015 vs. 2005</h1>
 <div id="computation-4" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> Computation</h2>
-<p><strong>Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, including both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).</strong></p>
+<p><strong>Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, including both sexes combined. Also compute the total mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).</strong></p>
 </div>
 <div id="report-results-4" class="section level2" number="11.2">
 <h2><span class="header-section-number">11.2</span> Report results</h2>
@@ -544,7 +558,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <h3><span class="header-section-number">11.2.2</span> Total effects</h3>
 <p><strong>Report the decomposition results for all ages combined in a table below with the following structure:</strong></p>
 <ul>
-<li><strong><code>sex</code>: One row for Male, Female, and Total, respectively</strong></li>
+<li><strong><code>sex</code>: One row for Male, Female, and Total, respectively, where “Total” means both sexes combined</strong></li>
 <li><strong><code>m_effect</code>: The age-specific mortality schedule effect</strong></li>
 <li><strong><code>c_effect</code>: The age-specific age structure effect</strong></li>
 <li><strong><code>total_effect</code>: The total age-specific effect</strong></li>
@@ -553,7 +567,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 </div>
 <div id="interpret-results-4" class="section level2" number="11.3">
 <h2><span class="header-section-number">11.3</span> Interpret results</h2>
-<p><strong>Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decomposition of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the differences in the effects mean.</strong></p>
+<p><strong>Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decomposition of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the sex differences in the effects mean.</strong></p>
 <p><strong>Answer below:</strong></p>
 </div>
 </div>
@@ -571,12 +585,12 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <li><strong><code>TFRc</code>: The estimated cohort TFR</strong></li>
 </ul>
 </div>
-<div id="what-extra-data-do-we-need-to-calculate-the-cohort-tfr-correctly-from-pprs" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> What extra data do we need to calculate the cohort TFR correctly from PPRs?</h2>
+<div id="what-extra-data-do-we-need-beyond-what-is-available-to-calculate-the-cohort-tfr-correctly-from-pprs" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> What extra data do we need beyond what is available to calculate the cohort TFR correctly from PPRs?</h2>
 <p><strong>Answer below:</strong></p>
 </div>
-<div id="what-would-have-to-be-true-about-parity-above-4-for-the-cohort-tfrs-you-calculated-to-be-correct" class="section level2" number="12.4">
-<h2><span class="header-section-number">12.4</span> What would have to be true about parity above 4 for the cohort TFRs you calculated to be correct?</h2>
+<div id="what-would-have-to-be-true-about-pprs-above-parity-4-for-the-cohort-tfrs-you-calculated-to-be-correct" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> What would have to be true about PPRs above parity 4 for the cohort TFRs you calculated to be correct?</h2>
 <p><strong>Answer below:</strong></p>
 </div>
 </div>
@@ -586,12 +600,12 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <p><img src="data:image/png;base64,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" width="672" /></p>
 <div id="pprs-for-1918-vs.-both-later-birth-cohorts" class="section level2" number="13.1">
 <h2><span class="header-section-number">13.1</span> PPRs for 1918 vs. both later birth cohorts</h2>
-<p><strong>With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curve of 1918 vs. both of the later cohorts.</strong></p>
+<p><strong>With reference to definition of a PPR and the proximate determinants of fertility, provide at least one potential explanation for the differences between the PPR curve of 1918 vs. both of the later cohorts.</strong></p>
 <p><strong>Answer below:</strong></p>
 </div>
 <div id="pprs-for-1943-vs.-1968" class="section level2" number="13.2">
 <h2><span class="header-section-number">13.2</span> PPRs for 1943 vs. 1968</h2>
-<p><strong>With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curves of 1943 and 1968.</strong></p>
+<p><strong>With reference to definition of a PPR and the proximate determinants of fertility, provide at least one potential explanation for the differences between the PPR curves of 1943 and 1968.</strong></p>
 <p><strong>Answer below:</strong></p>
 </div>
 </div>
@@ -599,14 +613,19 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <h1><span class="header-section-number">14</span> TFR, gross reproduction rate (GRR), net reproduction rate (NRR), generality fertility rate (GFR), and crude birth rate (CBR)</h1>
 <div id="computation-6" class="section level2" number="14.1">
 <h2><span class="header-section-number">14.1</span> Computation</h2>
-<p><strong>Calculate the TFR, GRR, NRR, GFR, and GFRc (GFR estimated from CBR assuming <span class="math inline">\({}_{\beta - n}C_\alpha = 0.25 = c\)</span>) for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided, even if you have to do some of the estimation indirectly. Feel free to assume the sex ratio at birth (SRB) is a constant 1.05 males per female. Hint: It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and <span class="math inline">\(p(A_m)\)</span>.</strong></p>
+<p><strong>Calculate the TFR, GRR, NRR, GFR, and GFRc (GFR estimated from CBR assuming <span class="math inline">\({}_{\beta - n}C_\alpha = 0.25 = C\)</span>) for each of the years from 2005 through 2015. Yes, you can estimate each of these using the data provided, even if you have to do some of the estimation indirectly. Feel free to assume the sex ratio at birth (SRB) is a constant 1.05 males per female.</strong></p>
+<p><strong>Hints:</strong></p>
+<ul>
+<li><strong>Remember that some of these period rates are functions of each other</strong></li>
+<li><strong>It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and <span class="math inline">\(p(A_m)\)</span></strong></li>
+</ul>
 </div>
 <div id="report-results-6" class="section level2" number="14.2">
 <h2><span class="header-section-number">14.2</span> Report results</h2>
 <p><strong>Report the results below in a table with the following structure:</strong></p>
 <ul>
 <li><strong><code>Year</code>: The period for which the rate applies</strong></li>
-<li><strong><code>[tfr/grr/nrr/gfr/cbr/gfr_c]</code>: Five separate columns for each of the period rates requested, including the actual GFR and the GFT estimated assuming that <span class="math inline">\({}_{\beta - n}C_\alpha = 0.25 = c\)</span>.</strong></li>
+<li><strong><code>[tfr/grr/nrr/gfr/cbr/gfr_c]</code>: Six separate columns for each of the period rates requested</strong></li>
 </ul>
 </div>
 <div id="how-well-does-the-rule-of-thumb-gfr-cbr0.25-predict-actual-gfr" class="section level2" number="14.3">
@@ -621,8 +640,8 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <p><strong>Construct a period multiple decrement table for deaths by despair vs. all other causes for both sexes combined in the U.S. in 2015.</strong></p>
 <p><strong>Hints:</strong></p>
 <ul>
-<li><strong>You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates. You should definitely save the single decrement table columns for later.</strong></li>
-<li><strong>The despair death count’s open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just assume that the death count ratio for the open-ended interval in the life table is the same as it is for open-ended interval in the cause-specific death count data.</strong></li>
+<li><strong>You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates.* </strong></li>
+<li><strong>The despair death count’s open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just make a simple assumption to impute the despair mortality for the open-ended interval in the life table (e.g. assume that the hazard ratios for the extra age intervals in the life table are the same as it is for open-ended interval in the cause-specific death count data).</strong></li>
 </ul>
 </div>
 <div id="report-results-7" class="section level2" number="15.2">
@@ -647,7 +666,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 </div>
 <div id="interpret-results-6" class="section level2" number="16.3">
 <h2><span class="header-section-number">16.3</span> Interpret results</h2>
-<p><strong>With reference to the appropriate parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60.</strong></p>
+<p><strong>With reference to the appropriate parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy at birth, age 20, and age 40; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60. Hint: Relative differences or ratios may in some ways be more informative than differences, and vice versa.</strong></p>
 <p><strong>Answer below</strong></p>
 </div>
 </div>
@@ -659,11 +678,36 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <p><strong>Hints:</strong></p>
 <ul>
 <li><strong>You will need to project over two five-year intervals!</strong></li>
-<li><strong>Your open-ended age interval for the projection needs to be five years younger than the open-ended age interval for your life tables, which means you’ll need to aggregate the starting population counts accordingly.</strong></li>
-<li><strong>Your age groups need to be uniformly five-years in length, so again you need to aggregate the starting population counts accordingly.</strong></li>
-<li><strong>I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group’s person-years columns into uniform five-year age groups.</strong></li>
-<li><strong>You will need to aggregate birth rates into five-year age groups. I suggest assuming that <span class="math inline">\(\alpha = 15\)</span> and <span class="math inline">\(\beta = 55\)</span>, meaning you will need to calculate birth rates for five-year age groups from starting ages 15 your 50, in five-year increments.</strong></li>
+<li><strong>When comparing your projection to the actual 2015 population counts, remember to aggregate the 0-1 and 1-5 age groups into a 0-5 group.</strong></li>
+<li><strong>I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group’s person-years columns into uniform five-year age groups. I’ve done this for you below, effectively dropping ages 12-14 and the oldest age group, which should have minimal effect on the projection since fertility is so low in those groups.</strong></li>
+<li><strong>I’ve also give you the actual population counts in 2015 for uniform five-year age groups</strong></li>
 </ul>
+<pre class="r"><code># Five-year birth counts, female exposures, and ASFR in 2005
+five_year_asmr_2005 &lt;- final_data[[&quot;us_births&quot;]] %&gt;%
+  dplyr::filter(Year == 2005, Age %&gt;% dplyr::between(15, 49)) %&gt;%
+  dplyr::select(Age, Total) %&gt;%
+  dplyr::mutate(
+    Age = Age %&gt;%
+      cut(breaks = seq(15, 50, 5), right = FALSE, labels = seq(15, 45, 5)) %&gt;%
+      as.character() %&gt;%
+      as.integer()
+  ) %&gt;%
+  dplyr::with_groups(Age, summarize, births = sum(Total)) %&gt;%
+  dplyr::left_join(
+    final_data[[&quot;us_exposures&quot;]] %&gt;%
+      dplyr::filter(Year == 2005) %&gt;%
+      dplyr::select(Age, Female)
+  ) %&gt;%
+  dplyr::mutate(ASFR = births/Female)</code></pre>
+<pre><code>## Joining, by = &quot;Age&quot;</code></pre>
+<pre class="r"><code># Population counts by uniform five-year age intervals
+pop_counts_actual_2015 &lt;- final_data[[&quot;us_population&quot;]] %&gt;%
+  dplyr::filter(Year == 2015) %&gt;%
+  dplyr::select(Age, Female1) %&gt;%
+  dplyr::mutate(Age = if_else(Age &lt; 5, 0L, Age)) %&gt;%
+  dplyr::with_groups(Age, summarize, actual_size = sum(Female1))
+# Proceed with your projection code below:
+# ...</code></pre>
 </div>
 <div id="report-results-9" class="section level2" number="17.2">
 <h2><span class="header-section-number">17.2</span> Report results</h2>
