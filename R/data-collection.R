@@ -7,7 +7,7 @@ library(readr)
 library(tidyr)
 
 # US age-specific start-of-year population counts ----
-periods <- c(1918, 1943, 1968, 2005, 2015, 2016, 2019)
+periods <- c(2005:2016)
 us_population <- HMDHFDplus::readHMDweb(
   CNTRY = "USA",
   item = "Population5",
@@ -128,6 +128,9 @@ us_ppr <- HMDHFDplus::readHFDweb(
   )
 ) %>%
   dplyr::filter(Cohort %in% c(1918, 1943, 1968))
+
+# 5x5 life tables for males and females in the U.S. in 2005 ----
+us_mltper_5x5
 
 # Write list of data sets to .rds
 saveRDS(mget(ls()), "data/final_data.rds")

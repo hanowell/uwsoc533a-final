@@ -13,8 +13,8 @@ output:
 # Instructions
 
 * **Complete the problem sets below.**
-*  **Write all of your code in the .Rmd file, with zero dependencies on external files other than the `final_data` object that you will load in from a GitHub URL.**
-* **Use your best judgment on the number of significant figures to include in your reported results; i.e., don't just report the default. Think about the comparison you are making and the scale of the measurements, and then choose an appropriate display precision.**
+*  **Write all of your code in the .Rmd file, with zero dependencies on external files other than the `final_data` object that I created, and that you will load in from a GitHub URL.**
+* **Use your best judgment on the number of significant figures to include in your reported results. Don't just report the default. Think about the context and any comparisons you are making, as well as the scale of the measurements, and then choose an appropriate display precision and unit of measurement.**
 * **Write your code, display your results, and interpret results in the areas indicated in the instructions of each problem.**
 
 # Setup
@@ -23,7 +23,7 @@ output:
 # Install pacman
 if (!require("pacman")) install.packages("pacman")
 # p_load function loads packages if installed, or install then loads otherwise
-pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr)
+pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)
 ```
 
 # Data collection
@@ -41,7 +41,7 @@ final_data <- readRDS(url("https://github.com/hanowell/uwsoc533a-final/blob/main
 
 ## Data sources
 
-**Data sets providing exposures, population counts, and mortality statistics come from the Human Mortality Database (HMD). Data sets providing fertility statistics come from the Human Fertility Database (HFD).**
+**Data sets providing exposures, population counts, and mortality statistics come from the Human Mortality Database (HMD). Data sets providing fertility statistics come from the Human Fertility Database (HFD). Death counts used to infer the age-specific Sars-CoV-2 mortality rate comes from the National Center for Health Statistics, Data from “Deaths involving coronavirus disease 2019 (COVID-19) by race and Hispanic origin group and age, by state.”^[https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Age-in-Years-/3apk-4u4f/data]. Data used to infer age-specific fertility rates for 2020 come from **
 
 ## Top-level data structure
 
@@ -167,7 +167,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**For the U.S. in 2015, use the population counts provided from the appropriate period(s) to approximate the age-specific person-years (ASPY) under the following assumptions, respectively:**
+**Use the population counts provided from the appropriate period(s) to approximate the age-specific person-years (ASPY) lived during each calendar year period between 1 January 2005 and 1 January 2015 under the following assumptions:**
 
 * **Linear (and constant) growth in person-years during the period**
 * **Constant (but not necessarily linear) growth in person-years during the period**
@@ -363,25 +363,202 @@ head(final_data[["us_asmr"]])
 
 ```
 
-# Total Fertility Rate (TFR) from parity progression ratios (PPR) vs. age-specific fertility rates (ASFRs)
+# Cohort total Fertility Rate (TFR) from parity progression ratios (PPR)
+
+## Computation
+
+**Assuming (contrary to fact) that the maximum parity is 4, compute the cohort TFR from the PPRs in the U.S. in 1918, 1943, and 1968, respectively.**
+
+```{r tfr_c_compute}
+
+```
+
+## Report results
+
+**Report the results in a table below with the following structure:**
+
+* **`Cohort`: The birth cohort to which the cohort TFR estimate applies**
+* **`TFRc`: The estimated cohort TFR**
+
+```{r tfr_c_report}
+
+```
+
+## What extra data do we need to calculate the cohort TFR correctly from PPRs?
+
+**Answer below:**
+
+
+
+## What would have to be true about parity above 4 for the cohort TFRs you calculated to be correct?
+
+**Answer below:**
+
+
 
 # PPR trend
 
 **Below is a plot of the PPRs for parity 0 through 3 comparing 1918, 1953, and 1968.**
 
-```{r}
+```{r ppr_plot, echo=FALSE, warning=FALSE, message=FALSE}
+final_data[["us_ppr"]] %>%
+  dplyr::select(-OpenInterval) %>%
+  tidyr::pivot_longer(
+    cols = PPR0_1:PPR3_4,
+    names_to = "parity",
+    names_prefix = "PPR",
+    values_to = "ppr"
+  ) %>%
+  dplyr::mutate(
+    parity = as.integer(substr(parity, 1, 1)),
+    Cohort = factor(Cohort)
+  ) %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = parity, y = ppr, color = Cohort) +
+  ggplot2::geom_point() +
+  ggplot2::geom_line() +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(panel.grid = element_blank())
+```
+
+## 1918 vs. both later birth cohorts
+
+**With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curve of 1918 vs. both of the later cohorts.**
+
+**Answer below:**
+
+
+
+## Explain the differences between the PPR curve
+
+**With reference to definition of a PPR and in terms of reproductive behavior (e.g. family planning, contraception, etc.), provide at least one potential explanation for the differences between the PPR curves of 1943 and 1968.**
+
+**Answer below:**
+
+
+
+# TFR, gross reproduction rate (GRR), net reproduction rate (NRR), and crude birth rate (CBR)
+
+## Computation
+
+**Calculate the TFR, GRR, NRR, GFR, and CBR for all of the periods for which you have the necessary data (1918, 1943, 1968, 2005, 2015, 2016, and 2019). Yes, you can estimate each of these using the data provided.**
+
+```{r fertility_and_reproduction_compute}
 
 ```
 
+## Report results
 
-# TFR vs. gross reproduction rate (GRR) vs. net reproduction rate (NRR)
+**Report the results below in a table with the following structure:**
+
+* **`Year`: The period for which the rate applies**
+* **`[tfr/grr/gfr/cbr]`: Four separate columns for each of the period rates requested**
+
+```{r fertility_and_reproduction_report}
+
+```
+
+## How well does the rule of thumb GFR = CBR/0.25  predict actual GFR?
+
+**Answer below (you can compare the two simply by summarizing their differences, if you like):**
+
+
 
 # Multiple decrement table for U.S. 2015: Deaths by despair vs. all other causes
 
+## Computation
+
+**Using whatever single decrement table method you desire (so long as it produces valid ${}_nq_x$ values), construct multiple decrement table for deaths by despair vs. all other causes, for both sexes combined.**
+
+**Hints:**
+
+* **You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates. You should definitely save the single decrement table columns for later.**
+* **The despair death count's open-ended age interval is younger than the open-ended interval for the all-cause mortality data. You'll need to redefine the open-ended age interval for the all-cause mortality rates accordingly. To do that, you'll need to aggregate the all-cause death counts and exposures accordingly to recalculate the mortality rates for the younger open-ended age interval.**
+
+```{r multiple_decrement_compute}
+
+```
+
+## Report results
+
+**Report the cause-specific multiple decrement table columns by age `x`, i.e., `mx_[d/o]`, `dx_[d/o]`, and `lx_[d/o]`, where `d` is for "despair" and `o` is for "other" causes of death, respectively.**
+
+```{r multiple_decrement_report}
+
+```
+
+## Interpret results
+
+**Describe the age pattern of age-specific mortality of probability of death due to despair compared to deaths due to all other causes.**
+
+**Answer below:**
+
 # Cause-deleted life table for U.S. 2015 without deaths by despair
+
+## Compute
+
+**Employing the proportional hazards assumption and accompanying procedure that we learned in class, construct a cause-deleted life table that excludes mortality due to despair.**
+
+```{r cause_deleted_compute}
+
+```
+
+## Report results
+
+**Report the cause-deleted life table below with the typical life table columns that we've reported so many times in previous assignments.**
+
+```{r cause_deleted_report}
+
+```
+
+## Interpret results
+
+**With reference to the parent life table, compare the mortality experience with vs. without deaths due to despair in terms of: (1) differences in life expectancy; (2) differences in the probability of surviving from birth to age 30; and (3) differences in the probability of surviving from age 40 to age 60.**
+
+**Answer below**
+
+
 
 # Population projection from 2005 to 2015
 
+## Computation
+
+**Assuming a closed population, project the female population of the U.S. by age from 2005 to 2015 assuming 2005 age- and sex-specific vital rates.**
+
+**Hints:**
+
+* **You will need to project over two five-year intervals!**
+* **Your open-ended age interval for the projection needs to be five years younger than the open-ended age interval for your life tables, which means you'll need to aggregate the starting population counts accordingly.**
+* **Your age groups need to be uniformly five-years in length, so again you need to aggregate the starting population counts accordingly.**
+* **I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group's person-years columns into uniform five-year age groups.**
+
+```{r projection_compute}
+
+```
+
+## Report results
+
+**Report the results below in two tables with the following structure.**
+
+* **`Age`: Starting age of the age interval**
+* **`N_2005`: Age-specific starting population count on 1 Jan 2005**
+* **`N_2015_proj`: Projected age-specific population count on 1 Jan 2015**
+* **`N_2015_actual`: Actual age-specific population count on 1 Jan 2015**
+
+```{r projection_report}
+
+```
+
+## Interpret results
+
+**Compare the projected to the actual population in 2015. What could our projection model be missing that could explain any differences you see?**
+
+**Answer below:**
+
+
+
 # Stable equivalent population predictions with and without a COVID-19 baby bust
+
+****
 
 # Population momentum in 2019
