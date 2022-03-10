@@ -449,7 +449,7 @@ final_data[["us_ppr"]] %>%
 **Hints:**
 
 * **Remember that some of these period rates are functions of each other**
-* **It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and $p(A_m)$**
+* **It will be easier to get to GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and $p(A_m)$**
 
 ```{r fertility_and_reproduction_compute}
 
@@ -480,7 +480,7 @@ final_data[["us_ppr"]] %>%
 
 **Hints:**
 
-* **You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates.* **
+* **You will need to recover the despair mortality rate and the mortality rate due to all other causes from the despair death counts, total death counts, and all-cause mortality rates.* **
 * **The despair death count's open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just make a simple assumption to impute the despair mortality for the open-ended interval in the life table (e.g. assume that the hazard ratios for the extra age intervals in the life table are the same as it is for open-ended interval in the cause-specific death count data).**
 
 ```{r multiple_decrement_compute}
@@ -538,8 +538,8 @@ final_data[["us_ppr"]] %>%
 **Hints:**
 
 * **You will need to project over two five-year intervals!**
-* **When comparing your projection to the actual 2015 population counts, remember to aggregate the 0-1 and 1-5 age groups into a 0-5 group.**
-* **I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group's person-years columns into uniform five-year age groups. I've done this for you below, effectively dropping ages 12-14 and the oldest age group, which should have minimal effect on the projection since fertility is so low in those groups.**
+* **When comparing your projection to the actual 2015 population counts, remember to aggregate the population counts in 2015 for the 0-1 and 1-5 age groups into a 0-5 group.**
+* **I have provided you with a female life table for the U.S. in 2005 in one-year age groups, but you will need to aggregate the 0-1 and 1-4 year age group's person-years columns into uniform five-year age groups. I've done this for you below, effectively dropping ages 12-14 and the oldest age group, which should have minimal effect on the projection since fertility is so low in those groups.**
 * **I've also give you the actual population counts in 2015 for uniform five-year age groups**
 
 ```{r projection_compute}
@@ -714,7 +714,7 @@ us_asfr_2009 %>%
 
 ## Compute
 
-**Calculate the population momentum factor for U.S. 2009 using the actual ASFRs, and for both sexes combined.**
+**Calculate the population momentum factor for U.S. 2009 female population, and using the actual ASFRs.**
 
 ```{r momentum}
 

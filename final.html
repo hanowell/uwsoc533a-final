@@ -617,7 +617,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <p><strong>Hints:</strong></p>
 <ul>
 <li><strong>Remember that some of these period rates are functions of each other</strong></li>
-<li><strong>It will be easier to get to NRR from GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and <span class="math inline">\(p(A_m)\)</span></strong></li>
+<li><strong>It will be easier to get to GRR by applying SRB to fertility rates rather than trying to calculate it from TFR, SRB, and <span class="math inline">\(p(A_m)\)</span></strong></li>
 </ul>
 </div>
 <div id="report-results-6" class="section level2" number="14.2">
@@ -640,7 +640,7 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <p><strong>Construct a period multiple decrement table for deaths by despair vs. all other causes for both sexes combined in the U.S. in 2015.</strong></p>
 <p><strong>Hints:</strong></p>
 <ul>
-<li><strong>You will need to recover the despair mortality rate and the rate of death due to all other causes from the despair death counts, total death counts, and all-cause mortality rates.* </strong></li>
+<li><strong>You will need to recover the despair mortality rate and the mortality rate due to all other causes from the despair death counts, total death counts, and all-cause mortality rates.* </strong></li>
 <li><strong>The despair death count’s open-ended age interval is younger than the open-ended interval for the all-cause mortality data. Just make a simple assumption to impute the despair mortality for the open-ended interval in the life table (e.g. assume that the hazard ratios for the extra age intervals in the life table are the same as it is for open-ended interval in the cause-specific death count data).</strong></li>
 </ul>
 </div>
@@ -678,8 +678,8 @@ pacman::p_load(dplyr, ggplot2, knitr, kableExtra, readr, stringr)</code></pre>
 <p><strong>Hints:</strong></p>
 <ul>
 <li><strong>You will need to project over two five-year intervals!</strong></li>
-<li><strong>When comparing your projection to the actual 2015 population counts, remember to aggregate the 0-1 and 1-5 age groups into a 0-5 group.</strong></li>
-<li><strong>I have provided you with a female life table for the U.S. in 2005, but you will need to aggregate the 0-1 and 1-4 year age group’s person-years columns into uniform five-year age groups. I’ve done this for you below, effectively dropping ages 12-14 and the oldest age group, which should have minimal effect on the projection since fertility is so low in those groups.</strong></li>
+<li><strong>When comparing your projection to the actual 2015 population counts, remember to aggregate the population counts in 2015 for the 0-1 and 1-5 age groups into a 0-5 group.</strong></li>
+<li><strong>I have provided you with a female life table for the U.S. in 2005 in one-year age groups, but you will need to aggregate the 0-1 and 1-4 year age group’s person-years columns into uniform five-year age groups. I’ve done this for you below, effectively dropping ages 12-14 and the oldest age group, which should have minimal effect on the projection since fertility is so low in those groups.</strong></li>
 <li><strong>I’ve also give you the actual population counts in 2015 for uniform five-year age groups</strong></li>
 </ul>
 <pre class="r"><code># Five-year birth counts, female exposures, and ASFR in 2005
@@ -802,7 +802,7 @@ us_fltper_2009 &lt;- final_data[[&quot;us_fltper&quot;]] %&gt;%
 <h1><span class="header-section-number">19</span> Population momentum in 2009</h1>
 <div id="compute-1" class="section level2" number="19.1">
 <h2><span class="header-section-number">19.1</span> Compute</h2>
-<p><strong>Calculate the population momentum factor for U.S. 2009 using the actual ASFRs, and for both sexes combined.</strong></p>
+<p><strong>Calculate the population momentum factor for U.S. 2009 female population, and using the actual ASFRs.</strong></p>
 </div>
 <div id="report-results-11" class="section level2" number="19.2">
 <h2><span class="header-section-number">19.2</span> Report results</h2>
