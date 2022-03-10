@@ -69,19 +69,6 @@ us_deaths_despair <- readr::read_csv("raw/USA_d_interm_idr.csv") %>%
   ) %>%
   dplyr::mutate(Age = as.integer(stringr::str_replace_all(Age, "p", "")))
 
-# U.S. death counts by Lexis triangles ----
-us_deaths_lexis <- HMDHFDplus::readHMDweb(
-  CNTRY = "USA",
-  item = "Deaths_lexis",
-  username = keyring::key_list("human-mortality-database")$username,
-  password = keyring::key_get(
-    service = "human-mortality-database",
-    username = keyring::key_list("human-mortality-database")$username
-  )
-) %>%
-  dplyr::filter(Year == 2015) %>%
-  dplyr::select(-Year)
-
 # US age-specific fertility ----
 us_asfr <- HMDHFDplus::readHFDweb(
   CNTRY = "USA",

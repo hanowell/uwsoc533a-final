@@ -12,8 +12,10 @@ output:
 
 # Instructions
 
+**Not following these instructions may result in you doing more work than you need to do. It may also result in deduction of points, but most likely I'll just ask you to correct the error and turn in an amended final for full credit.**
+
 * **Complete the problem sets below.**
-*  **Write all of your code in the .Rmd file, with zero dependencies on external files other than the `final_data` object that I created, and that you will load in from a GitHub URL.**
+*  **Write all of your code in the `.Rmd` file that you will turn in with the knitted `html` file, with zero dependencies on external files other than the `final_data` object that I created, and that you will load in from a GitHub URL.**
 * **Use your best judgment on the number of significant figures to include in your reported results. Don't just report the default. Think about the context and any comparisons you are making, as well as the scale of the measurements, and then choose an appropriate display precision and unit of measurement.**
 * **Write your code, display your results, and interpret results in the areas indicated in the instructions of each problem.**
 * **Do not just print out the `data.frame` of results. Put your results into a formatted table using `kable` or a similar package.**
@@ -26,9 +28,9 @@ output:
 # Grading
 
 * **Every single task where I ask you to report or interpret the results is worth the same amount of points out of the total 23 points that is distributed across questions.**
-* **I will give half credit on reported results and three-quarters credit on interpreted results that are incorrect, but you did the computation step mostly right (i.e. minor syntactical or logical error as opposed to serious conceptual error).**
+* **I will give half credit on reported results and three-quarters credit on interpreted results that are incorrect, but where you did the computation step mostly right (i.e. minor syntactical or logical error as opposed to serious conceptual error).**
 * **For some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because you will likely use some of them on future questions, and I'll also only give you half credit on results reported from incomplete computations.**
-* **I will give 10% credit to vaguely-worded answers where it is hard to understand what you are saying at all.**
+* **I will give 10% credit to vaguely-worded written answers where it is hard to understand what you are saying at all.**
 * **I will forgive minor numerical errors entirely.**
 * **Two freebie points for good-faith effort at completing the entire final.**
 
@@ -60,17 +62,17 @@ final_data <- readRDS(url("https://github.com/hanowell/uwsoc533a-final/blob/main
 
 ## Data sources
 
-**Data sets providing exposures, population counts, and mortality statistics come from the Human Mortality Database (HMD). Data sets providing fertility statistics come from the Human Fertility Database (HFD). Death counts used to infer the age-specific Sars-CoV-2 mortality rate comes from the National Center for Health Statistics, Data from “Deaths involving coronavirus disease 2019 (COVID-19) by race and Hispanic origin group and age, by state.”^[https://data.cdc.gov/NCHS/Provisional-COVID-19-Death-Counts-by-Age-in-Years-/3apk-4u4f/data]. Data used to infer age-specific fertility rates for 2020 come from **
+**Data sets providing exposures, population counts, and mortality statistics come from the Human Mortality Database (HMD). Data sets providing fertility statistics come from the Human Fertility Database (HFD).**
 
 ## Top-level data structure
 
-**You've just loaded a `list` of all the `data.frame`s you need to complete this final. To access a given `data.frame` in the `list`:**
+**You've just loaded a `list` of all the `data.frame`s you need to complete this final. To access a given `data.frame` in the `list`, write code like this:**
 
 ```{r eval=FALSE}
 final_data[["[name of data.frame]"]]
 ```
 
-**For example:**
+**For example, the code below returns the head of the `us_asmr` data:**
 
 ```{r}
 head(final_data[["us_asmr"]])
@@ -80,7 +82,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_asfr`
 
-**Annual period age-specific fertility rates (ASFRs) for five-year age groups the U.S. from 1905 through 2016.**
+**Annual period age-specific fertility rates (ASFRs) for five-year age groups the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which ASFR was measured**
 * **`Age`: Starting age of one-year age group applicable to `ASFR` in `Year`**
@@ -89,7 +91,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_asmr`
 
-**Annual period age-specific mortality rates (ASMRs) for five-year age groups by sex for the U.S. from 1905 through 2016.**
+**Annual period age-specific mortality rates (ASMRs) for five-year age groups by sex for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which ASMR was measured**
 * **`Age`: Starting age of one-year age group applicable to ASMR in `Year`**
@@ -100,7 +102,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_births`
 
-**Annual period age-specific birth counts on January 1st  for the U.S. from 1905 through 2016.**
+**Annual period age-specific birth counts on January 1st  for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which births were counted on 1 January**
 * **`Age`: Starting age of one-year age group applicable to birth count in `Year`**
@@ -109,7 +111,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_deaths`
 
-**Annual period age-specific death counts for the U.S. from 1905 through 2016.**
+**Annual period age-specific death counts for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which death count was measured**
 * **`Age`: Starting age of one-year age group applicable to death count in `Year`**
@@ -125,20 +127,9 @@ head(final_data[["us_asmr"]])
 * **`Age`: Starting age for the age group**
 * **`D_despair`: Number of deaths in `Age` group due to despair**
 
-### `us_deaths_lexis`
-
-**Annual period age-specific death counts by birth cohort and sex in the U.S. in 2015.**
-
-* **`Age`: Starting age for the age group**
-* **`Cohort`: Birth cohort to which age-specific death count applies**
-* **`Female`: Female cohort- and age-specific death count**
-* **`Male`: Male cohort- and age-specific death count**
-* **`Total`: Total cohort- and age-specific death count**
-* **`OpenInterval`: Boolean indicator for whether or not the age interval is open to the right**
-
 ### `us_exposures`
 
-**Annual period age-specific person-year (ASPY) approximations by sex for the U.S. from 1905 through 2016.**
+**Annual period age-specific person-year (ASPY) approximations by sex for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which ASPY was measured**
 * **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
@@ -149,7 +140,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_population`
 
-**Age-specific population counts by sex and day of year (January 1st vs. December 31st) for the U.S. from 1905 through 2016.**
+**Age-specific population counts by sex and day of year (January 1st vs. December 31st) for the U.S. from 1933 through 2016.**
 
 * **`Year`: The one-year period during which population counts were measured**
 * **`Age`: Starting age of one-year age group applicable to ASPY in `Year`**
@@ -171,7 +162,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_fltper`, `us_mltper`, and `us_bltper`
 
-**These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1905 through 2016. They have all of the columns you expect from a life table, with `Age` being the starting age of each age group, and `Year` referring to your annual period from which the life table caluclated.**
+**These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1933 through 2016. They have all of the columns you expect from a life table, with `Age` being the starting age of each age group, and `Year` referring to your annual period from which the life table caluclated.**
 
 ### `us_fltper_2009`
 
@@ -192,7 +183,7 @@ head(final_data[["us_asmr"]])
 
 ## Report results
 
-**Report total age-specific person-years lived in the 2015 calendar-year period below in a table with the following structure:**
+**Report total (both sexes combined) age-specific person-years lived in the 2015 calendar-year period below in a table with the following structure:**
 
 * **`Age` as defined in the original dataset**
 * **`py_linear`: The linear growth approximation of ASPY**
@@ -243,7 +234,7 @@ head(final_data[["us_asmr"]])
 
 ### Population CGR
 
-**Report the CGR results for the total population (both sexes combined) in a table below with the following structure:**
+**Report the CGR results for 2005 through 2015 for the total population (both sexes combined) in a table below with the following structure:**
 
 * **`Year`: The calendar-year period to which the CGR estimates apply**
 * **`cgr_linear`: CGR under the linear growth approximation of ASPY**
@@ -266,7 +257,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**For each sex and for both sexes combined, compute the principal period rates that contributed to the CGR (not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
+**For both sexes combined, compute the principal period rates that contributed to the CGR (not age-specific) for each calendar-year period from 2005 through 2015. Hint: For each year, you will have to infer the crude rate of net migration (CRNM) because you can't calculate it directly.**
 
 ```{r principal_rates_compute}
 
@@ -321,7 +312,7 @@ head(final_data[["us_asmr"]])
 
 ## Computation
 
-**Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, include both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
+**Decompose the difference in the un-standardized CDR between 2015 and 2005 (i.e. CDR(2015) - CDR(2005)) into its age-specific mortality schedule and age structure effects for each sex, respectively, including both combined. Also compute the mortality schedule and age structure effects for all ages combined (respectively for each sex, including both sexes combined).**
 
 ```{r cdr_decomp_compute}
 
@@ -357,32 +348,11 @@ head(final_data[["us_asmr"]])
 
 ## Interpret results
 
-**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decompositions of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you.**
+**Within the context of the intervening Great Recession and its aftermath, interpret the age-specific and total decompositions of the change in CDR from 2005 to 2015. Make explicit reference to the interpretation of the signs and magnitudes of the effects themselves. Highlight any differences in the effects by sex that stand out to you, being specific about what the differences in the effects mean.**
 
 **Answer below:**
 
 
-
-# Age-specific probabilities of death from Lexis triangles
-
-## Computation
-
-**For each sex (including all sexes combined), use the period birth counts (`us_births`) and the 2015 age-specific Lexis triangle death counts (`us_deaths_lexis`) to directly calculate the age-specific probabilities of death (i.e. ${}_nq_x$) for all age groups.**
-
-```{r as_probs_compute}
-
-```
-
-## Report results
-
-**Report the results below in a table with the following structure:**
-
-* **`Age`: The starting age of the age group**
-* **`qx_[m/f/b]`: Separate columns for the ${}_nq_x$ values of males (`m`), females (`f`) and both sexes combined (`b`)**
-
-```{r as_probs_report}
-
-```
 
 # Cohort total Fertility Rate (TFR) from parity progression ratios (PPR)
 
