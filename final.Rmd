@@ -18,10 +18,11 @@ output:
 * **Write your code, display your results, and interpret results in the areas indicated in the instructions of each problem.**
 * **Do not just print out the `data.frame` of results. Put your results into a formatted table using `kable` or a similar package.**
 * **Read [about the data](#about-the-data) before starting the problems to understand what data is available to you.**
+* **Save yourself some extra work by reusing previous results where applicable**
 
 # Spoiler alert
 
-**You will not have to construct any (parent single decrement) life tables during this final. We've been there and done that.** 
+**You will not construct any (parent single decrement) life tables for this final.** 
 
 # Setup
 
@@ -159,6 +160,14 @@ head(final_data[["us_asmr"]])
 ### `us_fltper`, `us_mltper`, and `us_bltper`
 
 **These are the annual female, male, and total population life table for five-year age groups for the U.S. from 1905 through 2016. They have all of the columns you expect from a life table, with `Age` being the starting age of each age group, and `Year` referring to your annual period from which the life table caluclated.**
+
+### `us_fltper_2009`
+
+**Annual female life table for one-year age groups for the U.S. in 2009.**
+
+### `us_asfr_2009`
+
+**Annual ASMRs for one-year age groups in the U.S. in 2009.**
 
 # Annual age-specific person-year (ASPY) approximations {#aspy-approx}
 
@@ -563,8 +572,103 @@ final_data[["us_ppr"]] %>%
 
 
 
-# Stable equivalent population predictions with and without a COVID-19 baby bust
+# Stable equivalent population predictions
 
-****
+**Below, I construct `data.frame`s of ratios between 2007 vs. 2005 age-specific fertility rates, as well as the same ratios comparing 2009 vs. 2007.**
 
-# Population momentum in 2019
+```{r ratios}
+asfr_ratios <- final_data[["us_asfr"]] %>%
+  dplyr::filter(Year %in% c(2005, 2007, 2009)) %>%
+  dplyr::arrange(Age, Year) %>%
+  dplyr::group_by(Age) %>%
+  dplyr::mutate(ratio = ASFR / dplyr::lag(ASFR)) %>%
+  dplyr::filter(!is.na(ratio)) %>%
+  dplyr::mutate(comparison = dplyr::case_when(
+    Year == 2007 ~ "2007 vs. 2005",
+    Year == 2009 ~ "2009 vs. 2007"
+  )) %>%
+  dplyr::select(Age, comparison, ratio)
+```
+
+**Below is a plot of ratios between the 2007 vs. 2005 age-specific fertility rates and the 2009 vs. 2007 age-specific fertility rates, respectively. Notice how the age-specific fertility rates increased from 2005 to 2007 for most high-fertility age groups (and increased especially at older ages). By comparison, fertility decreased below age 40 from 2007 to 2009 (two years into the Great Recession).**
+
+```{r asfr_ratios_plot, echo=FALSE, message=FALSE, warning=FALSE}
+asfr_ratios %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = Age, y = ratio, color = comparison) +
+  ggplot2::geom_line() +
+  ggplot2::geom_hline(yintercept = 1, linetype = "dotted") +
+  ggplot2::ggtitle("Ratios of age-specific fertility rates") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(panel.grid = element_blank())
+```
+
+**We will compute female stable equivalent populations in 2009 under two scenarios:**
+
+* **The prevailing age-specific vital rates in 2009**
+* **The age-specific vital rates in 2009 had ASMR ratios comparing 2009 to 2007 been the same as they had been comparing 2007 to 2005**
+
+**Below, I construct the age-specific fertility and mortality data you will use to complete this task. Read the code and the comments to see what I'm doing.**
+
+```{r stable_equiv_data}
+# Construct the ASFR data
+us_asfr_2009 <- final_data[["us_asfr"]] %>%
+  # Pull the actual 2007 ASFRs
+  dplyr::filter(Year == 2009) %>%
+  # Join to the appropriate ASFR ratios
+  dplyr::left_join(
+    asfr_ratios %>% dplyr::filter(comparison == "2007 vs. 2005")
+  ) %>%
+  dplyr::mutate(ASFR_alt = ASFR * ratio)
+# Construct the ASMR and life table data
+us_fltper_2009 <- final_data[["us_fltper"]] %>%
+  dplyr::filter(Year == 2009)
+```
+
+**Below is a plot of the <span style='color:dodgerblue'>actual</span> and <span style='color:darkorange'>alternative</span> 2009 ASFRs**
+
+```{r asfr_plot, echo=FALSE, message=FALSE, warning=FALSE}
+us_asfr_2009 %>%
+  ggplot2::ggplot() +
+  ggplot2::aes(x = Age) +
+  ggplot2::geom_line(aes(y = ASFR), color = "dodgerblue") +
+  ggplot2::geom_line(aes(y = ASFR_alt), color = "darkorange") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(panel.grid = element_blank())
+```
+
+## Estimate the stable equivalent populations under the two scenarios
+
+**Estimate the stable equivalent population age structure, birth rate, death rate, and intrinsic growth rate under both scenarios of interest, assuming a closed one-sex (female) population.**
+
+```{r stable_equiv_compute}
+
+```
+
+## Report results
+
+### Stable age structures
+
+**Report the stable age structure under both scenarios in a table below with the following structure:**
+
+* **`Age`: Age at the beginning of the age interval**
+* **`cx_actual`: The actual female age structure in 2009**
+* **`cx_stable_base`: The stable age structure under the 2009 ASFRs**
+* **`cx_stable_alt`: The stable age structure under the alternative 2009 ASFRs**
+
+```{r stable_equiv_report_cx}
+
+```
+
+### Intrinsic rates
+
+**Report the stable equivalent birth, death, and intrinsic growth rates in a table below with the following structure:**
+
+* **`rate_name`: Row for birth, death, and growth**
+* **`rate_value`: Value for the stable rate in question**
+
+## TFR effect on the intrinsic growth rate in the stable equivalent populations
+
+**Using $\LaTeX$, show the effect of the change in TFR between the alternative and baseline scenarios on the intrinsic growth rate of the stable equivalent population as a function of the generation length $T$**
+
+**Answer below:**

@@ -118,7 +118,7 @@ us_ppr <- HMDHFDplus::readHFDweb(
 ) %>%
   dplyr::filter(Cohort %in% c(1918, 1943, 1968))
 
-# 5x5 life tables for males, females, and both sexes combined ----
+# 5x1 life tables for males, females, and both sexes combined ----
 us_mltper <- HMDHFDplus::readHMDweb(
   CNTRY = "USA",
   item = "mltper_5x1",
@@ -149,6 +149,18 @@ us_bltper <- HMDHFDplus::readHMDweb(
   )
 ) %>%
   dplyr::filter(Year %in% periods)
+
+# 1x1 female life table ----
+us_fltper_2009 <- HMDHFDplus::readHMDweb(
+  CNTRY = "USA",
+  item = "fltper_1x1",
+  username = keyring::key_list("human-mortality-database")$username,
+  password = keyring::key_get(
+    service = "human-mortality-database",
+    username = keyring::key_list("human-mortality-database")$username
+  )
+) %>%
+  dplyr::filter(Year == 2009)
 
 # Write list of data sets to .rds
 saveRDS(mget(ls()), "data/final_data.rds")
