@@ -19,10 +19,22 @@ output:
 * **Do not just print out the `data.frame` of results. Put your results into a formatted table using `kable` or a similar package.**
 * **Read [about the data](#about-the-data) before starting the problems to understand what data is available to you.**
 * **Save yourself some extra work by reusing previous results where applicable**
+* **Try to write your code as cleanly as possible. The cleaner your code, the easier it is for me to see whether you got most of the steps right, and the more likely I will be able to give you partial credit for getting the code mostly right even if your numerical results are horribly wrong.**
+* **Keep your written answers concise, but also specific to the question at hand.**
+* **Have fun?**
+
+# Grading
+
+* **Every single task where I ask you to report or interpret the results is worth the same amount of points out of the total 23 points that is distributed across questions.**
+* **I will give half credit on reported results and three-quarters credit on interpreted results that are incorrect, but you did the computation step mostly right (i.e. minor syntactical or logical error as opposed to serious conceptual error).**
+* **For some questions, I ask you to do more computations than I ask you to report on. Still do the computations I ask you to do, because you will likely use some of them on future questions, and I'll also only give you half credit on results reported from incomplete computations.**
+* **I will give 10% credit to vaguely-worded answers where it is hard to understand what you are saying at all.**
+* **I will forgive minor numerical errors entirely.**
+* **Two freebie points for good-faith effort at completing the entire final.**
 
 # Spoiler alert
 
-**You will not construct any (parent single decrement) life tables for this final.** 
+**You will not construct any (parent single decrement) life tables for this final.**
 
 # Setup
 
@@ -68,7 +80,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_asfr`
 
-**Annual period age-specific fertility rates (ASFRs) for the U.S. from 1905 through 2016.**
+**Annual period age-specific fertility rates (ASFRs) for five-year age groups the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which ASFR was measured**
 * **`Age`: Starting age of one-year age group applicable to `ASFR` in `Year`**
@@ -77,7 +89,7 @@ head(final_data[["us_asmr"]])
 
 ### `us_asmr`
 
-**Annual period age-specific mortality rates (ASMRs) by sex for the U.S. from 1905 through 2016.**
+**Annual period age-specific mortality rates (ASMRs) for five-year age groups by sex for the U.S. from 1905 through 2016.**
 
 * **`Year`: The one-year period during which ASMR was measured**
 * **`Age`: Starting age of one-year age group applicable to ASMR in `Year`**
@@ -164,10 +176,6 @@ head(final_data[["us_asmr"]])
 ### `us_fltper_2009`
 
 **Annual female life table for one-year age groups for the U.S. in 2009.**
-
-### `us_asfr_2009`
-
-**Annual ASMRs for one-year age groups in the U.S. in 2009.**
 
 # Annual age-specific person-year (ASPY) approximations {#aspy-approx}
 
@@ -672,3 +680,39 @@ us_asfr_2009 %>%
 **Using $\LaTeX$, show the effect of the change in TFR between the alternative and baseline scenarios on the intrinsic growth rate of the stable equivalent population as a function of the generation length $T$**
 
 **Answer below:**
+
+
+## Interpret results
+
+**Compare the actual, baseline stable equivalent, and alternative stable equivalent population structures and intrinsic rates and explain the differences between them with reference to the underlying rate schedules. I will give you 1 whole bonus point if you correctly reference our lessons on the comparative statics of fertility effects on stable age structure, and another whole bonus point if you correctly reference our lessons on fertility effects on the stable death rate.**
+
+**Answer below:**
+
+
+
+# Population momentum in 2009
+
+## Compute
+
+**Calculate the population momentum factor for 2009 (using the actual ASFRs).**
+
+```{r momentum}
+
+```
+
+## Report results
+
+**Report the population momentum factor in a full sentence below.**
+
+**Answer below:**
+
+
+
+## Interpret results
+
+**Explain what the reported population momentum factor means in a full sentence below.**
+
+**Answer:**
+
+
+
