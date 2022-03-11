@@ -712,6 +712,8 @@ us_asfr_2009 %>%
 
 # Population momentum in 2009
 
+**I wasn't able to walk you through the way to compute momentum in code, so this question is worth a whole point of extra credit.**
+
 ## Compute
 
 **Calculate the population momentum factor for U.S. 2009 female population, and using the actual ASFRs.**
